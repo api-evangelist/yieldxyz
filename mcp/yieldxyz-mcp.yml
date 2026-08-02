@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://docs.yield.xyz/docs/mcp-server
+server:
+  name: yield-agentkit
+  transport: http
+  url: https://mcp.yield.xyz/mcp
+  health: https://mcp.yield.xyz/health
+  auth: none-for-testing
+  tool_count: 22
+install:
+  claude_cli: claude mcp add --transport http yield-agentkit https://mcp.yield.xyz/mcp
+  claude_desktop_config: |
+    {
+      "mcpServers": {
+        "yield-agentkit": {
+          "command": "npx",
+          "args": ["-y", "mcp-remote", "https://mcp.yield.xyz/mcp"]
+        }
+      }
+    }
+docs:
+  overview: https://docs.yield.xyz/docs/mcp-server
+  tool_reference: https://docs.yield.xyz/docs/tool-reference
+  agentkit_overview: https://docs.yield.xyz/docs/agents-overview
+notes: |
+  Yield.xyz AgentKit ships a fully hosted/remote MCP server exposing 22 structured
+  tools that connect Claude Desktop, Cursor, and other MCP agents to the Yield.xyz
+  API — discover yields, build unsigned transactions, sign, and broadcast. Full tool
+  list documented at the tool reference. No API key is required for testing.

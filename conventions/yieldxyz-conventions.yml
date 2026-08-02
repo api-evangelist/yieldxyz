@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.yield.xyz/docs/core-concepts
+description: |
+  Cross-cutting request/response semantics for the Yield.xyz non-custodial yield API,
+  derived from the published documentation. The API is organized around four
+  primitives — Yields, Yield Details, Balances, and Actions — and returns complete,
+  ordered, unsigned transaction flows that the developer signs and broadcasts.
+authentication:
+  style: api-key-header
+  header: X-API-KEY
+  ref: authentication/yieldxyz-authentication.yml
+action_model:
+  description: |
+    Every yield exposes standardized intents. An action call returns a ready-to-submit,
+    ordered sequence of unsigned transactions; the client signs and submits each by id.
+    Multi-step async flows (bridges, delayed withdrawals) expose hasNextStep and a
+    /actions/:id/step endpoint to fetch the next transaction after on-chain confirmation.
+  intents: [enter, exit, manage]
+  submit: POST /transactions/:id/submit  (signedPayload to broadcast, or transactionHash if already submitted)
+  next_step: POST /actions/:id/step (when hasNextStep is true)
+pagination:
+  style: paginated-lists
+  description: |
+    List endpoints (actions, markets, events, activity) return paginated results
+    ordered most-recent-first. Candle data is capped at 5000 per request.
+  notes: Cursor/limit parameter names are documented per endpoint in the API reference.
+versioning:
+  style: uri-path
+  current: v1
+  ref: lifecycle/yieldxyz-lifecycle.yml
+rate_limit_signaling:
+  ref: rate-limits/yieldxyz-rate-limits.yml
+  tiers: [Trial 1 rps, Standard 100 rps, Pro 1000+ rps]
+idempotency:
+  supported: false
+  notes: |
+    No idempotency-key mechanism is documented. Safety is instead enforced through
+    Shield (zero-trust transaction validation) and server-side Defense Mode rather
+    than idempotent retries.
+safety_controls:
+  shield: https://docs.yield.xyz/docs/shield
+  defense_mode: https://docs.yield.xyz/docs/defense-mode
+  key_rules: https://docs.yield.xyz/docs/key-rules

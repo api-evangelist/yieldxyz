@@ -1,0 +1,44 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Yield.xyz
+providerId: yieldxyz
+generated: '2026-07-21'
+method: searched
+created: '2026-07-21'
+modified: '2026-07-21'
+tags:
+- Rate Limiting
+- Yield
+- DeFi
+description: |
+  Yield.xyz enforces per-API-key request rate limits and Optimized Allocator Vault
+  (OAV) deployment limits that scale by plan tier. Every API key includes the full
+  yield integration suite; only the ceilings differ.
+sources:
+- https://docs.yield.xyz/docs/rate-limits-and-plans
+responseCodes:
+  throttled: 429
+limits:
+- name: Trial plan requests
+  scope: api-key
+  metric: requests_per_second
+  limit: 1
+  timeFrame: second
+  notes: Trial tier; 3 OAV deployments.
+- name: Standard plan requests
+  scope: api-key
+  metric: requests_per_second
+  limit: 100
+  timeFrame: second
+  notes: Standard tier; 10 OAV deployments.
+- name: Pro plan requests
+  scope: api-key
+  metric: requests_per_second
+  limit: 1000
+  timeFrame: second
+  notes: Pro tier; 1,000+ rps and 100 OAV deployments.
+policies:
+- name: OAV deployment limits
+  description: Optimized Allocator Vault deployments are capped by tier (Trial 3 /
+    Standard 10 / Pro 100).

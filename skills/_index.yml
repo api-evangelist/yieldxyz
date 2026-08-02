@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.yield.xyz/docs/skills
+description: |
+  Yield.xyz publishes packaged agent Skills through its AgentKit program. These are
+  provider-authored, MCP-compatible capabilities that turn yield intents into reliable
+  on-chain actions (discover yields, build transactions, sign, broadcast) with routing
+  logic, correct API patterns, and guardrails included. Captured from the provider's
+  own documentation — not generated locally (this repo has no captured OpenAPI to
+  ground custom skills against).
+skills:
+- name: AgentKit Skills
+  description: Plug-and-play skills for MCP-compatible agents that turn AgentKit into
+    a full execution stack — discover yields, build transactions, sign, and broadcast
+    across multiple wallet and signing setups.
+  api: https://api.yield.xyz
+  docs: https://docs.yield.xyz/docs/agent-skills
+- name: OpenClaw Skills
+  description: Install the Yield.xyz skill to give any OpenClaw-compatible agent
+    complete yield infrastructure access, routing logic, correct API patterns, and
+    guardrails.
+  api: https://api.yield.xyz
+  docs: https://docs.yield.xyz/docs/openclaw-skills
+  repo: https://github.com/stakekit/yield-agent
+- name: SuperSkills
+  description: Pre-built agent capabilities including morning briefings, gas-aware
+    claim timing, cross-chain rate comparison, DAO treasury operations, and 40+ more.
+  api: https://api.yield.xyz
+  docs: https://docs.yield.xyz/docs/superskills
+tooling:
+  agentkit_repo: https://github.com/stakekit/agentkit
+  key_rules: https://docs.yield.xyz/docs/key-rules

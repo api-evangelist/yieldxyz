@@ -1,0 +1,36 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.npmjs.com/package/@yieldxyz/sdk
+packages:
+- language: typescript
+  registry: npm
+  name: "@yieldxyz/sdk"
+  version: 0.0.7
+  url: https://www.npmjs.com/package/@yieldxyz/sdk
+  install: npm install @yieldxyz/sdk
+  repository: https://github.com/stakekit/sdk
+  description: Yield.xyz TypeScript SDK — typesafe interface over the non-custodial
+    yield API with helpers for signing, formatting, and transaction management.
+  official: true
+- language: typescript
+  registry: npm
+  name: "@stakekit/widget"
+  version: 0.0.280
+  url: https://www.npmjs.com/package/@stakekit/widget
+  install: npm install @stakekit/widget
+  description: Embeddable Yield.xyz/StakeKit Widget component (React + bundled) for
+    drop-in staking, restaking, and vault flows.
+  official: true
+- language: typescript
+  registry: npm
+  name: "@stakekit/use-inject-provider"
+  url: https://www.npmjs.com/package/@stakekit/use-inject-provider
+  install: npm install @stakekit/use-inject-provider
+  description: Utility to inject a wallet provider into the Widget inside a React
+    Native WebView.
+  official: true
+notes: |
+  Yield.xyz also publishes a Signers Package (TypeScript, EVM + non-EVM signing via
+  mnemonic or Ledger) documented at https://docs.yield.xyz/docs/signers-packages and
+  a legacy StakeKit js-sdk at https://github.com/stakekit/js-sdk. The GitHub org
+  https://github.com/stakekit hosts sdk, widget, shield, agentkit, and api-recipes.

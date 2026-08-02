@@ -1,0 +1,53 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.yield.xyz/docs/core-concepts
+description: |
+  Entity-relationship model for the Yield.xyz API, captured from the core-concepts
+  documentation (no downloadable OpenAPI is published to derive $ref links from).
+entities:
+- name: Yield
+  description: An earning opportunity (staking, restaking, lending, vault, RWA,
+    perps). Discoverable and filterable by network, input token, and protocol.
+  id_field: yieldId
+  endpoints: ['GET /v1/yields', 'GET /v1/yields/{yieldId}']
+- name: YieldDetails
+  description: Metadata for a yield — reward mechanics, accepted tokens, fees,
+    validator structure, lockups, and execution schemas.
+  belongs_to: Yield
+- name: Balance
+  description: A user's positions across all lifecycle states (active, pending,
+    cooling down, claimable, locked), unified across protocols and networks.
+  endpoints: ['GET /v1/yields/{yieldId}/balances', 'POST /v1/yields/balances']
+- name: Action
+  description: A transaction intent (enter/exit/manage) that returns an ordered
+    sequence of unsigned transactions with routing, formatting, validator selection,
+    and approvals. May be multi-step (hasNextStep).
+  id_field: actionId
+  endpoints: ['POST /v1/actions/{intent}', 'GET /v1/actions/{id}', 'POST /v1/actions/{id}/step']
+- name: Transaction
+  description: A single unsigned transaction produced by an Action, submitted after
+    signing.
+  id_field: transactionId
+  belongs_to: Action
+  endpoints: ['POST /v1/transactions/{id}/submit']
+relationships:
+- from: YieldDetails
+  to: Yield
+  kind: belongs_to
+  via: yieldId
+- from: Balance
+  to: Yield
+  kind: belongs_to
+  via: yieldId
+- from: Action
+  to: Yield
+  kind: belongs_to
+  via: yieldId
+- from: Action
+  to: Transaction
+  kind: has_many
+  via: actionId
+- from: Transaction
+  to: Action
+  kind: belongs_to
+  via: actionId

@@ -1,0 +1,251 @@
+# Yield.xyz Documentation
+
+> Documentation for Yield.xyz
+
+## Guides
+- [Welcome](https://docs.yield.xyz/docs/getting-started.md): The non-custodial yield API that powers wallets, custodians, and AI agents across 80+ networks.
+- [Why use Yield.xyz](https://docs.yield.xyz/docs/the-business-value-of-yieldxyz.md): Why building with Yield.xyz outperforms direct protocol integrations for DeFi yields
+- [Core Concepts](https://docs.yield.xyz/docs/core-concepts.md): The three primitives every Yield.xyz integration is built on
+- [Discover Yields](https://docs.yield.xyz/docs/yield-metadata.md): How to discover and filter yield opportunities through standardized metadata
+- [Actions](https://docs.yield.xyz/docs/actions.md): The standardized enter, exit, and manage flows that work across every yield
+- [Balances](https://docs.yield.xyz/docs/balances.md): A unified view of user positions across every protocol and lifecycle state
+- [Allocator Vaults & OAVs Introduction](https://docs.yield.xyz/docs/allocator-vaults-oavs-introduction.md): What Optimized Allocator Vaults are and how they automate multi-strategy yield with True APY and customizable fees
+- [Allocator Vaults & OAVs](https://docs.yield.xyz/docs/allocator-vaults-and-oavs.md): Technical reference for allocator vault logic, rebalancing, and fees
+- [ Replacing Legacy Yield Products with OAVs and the Yield.xyz API](https://docs.yield.xyz/docs/replacing-legacy-yield-products-with-optimized-allocator-vaults-oavs-and-the-yieldxyz-api.md): Migration path for teams moving from legacy staking stacks to Yield.xyz
+- [Fees](https://docs.yield.xyz/docs/fees.md): The three fee types integrators can configure and monetize with
+- [Performance & Management Fees](https://docs.yield.xyz/docs/performance.md): How performance and management fees are configured and collected
+- [Deposit Fees](https://docs.yield.xyz/docs/deposit-fees.md): How deposit fees are configured and routed to integrator wallets
+- [Preferred Validator Network](https://docs.yield.xyz/docs/preferred-validator-network.md): A curated registry of pre-vetted institutional validators across supported networks, selected on uptime, performance, and slashing history
+- [Shield](https://docs.yield.xyz/docs/shield.md): Zero-trust transaction validation for Yield.xyz integrations.
+- [Defense Mode](https://docs.yield.xyz/docs/defense-mode.md): Server-side transaction enforcement for the Yield API
+- [PerpsKit](https://docs.yield.xyz/docs/perpskit.md)
+- [Perps Widget v1](https://docs.yield.xyz/docs/perps-widget-v1.md)
+- [Supported Networks](https://docs.yield.xyz/docs/supported-networks.md): Every EVM and non-EVM network Yield.xyz supports today
+- [Tempo](https://docs.yield.xyz/docs/tempo.md)
+- [Robinhood](https://docs.yield.xyz/docs/robinhood.md)
+- [Staking](https://docs.yield.xyz/docs/staking-yields.md)
+- [EVM](https://docs.yield.xyz/docs/evm.md)
+- [Avalanche](https://docs.yield.xyz/docs/avalanche-avax-native-staking.md)
+- [BNB](https://docs.yield.xyz/docs/bsc-bnb-native-staking.md): Native BNB staking
+- [CoreDAO](https://docs.yield.xyz/docs/core-core-native-staking.md)
+- [Celo](https://docs.yield.xyz/docs/celo-celo-native-staking.md): Native staking for Celo
+- [ETH via Everstake Pool](https://docs.yield.xyz/docs/ethereum-eth-everstake-staking.md)
+- [ETH via Figment](https://docs.yield.xyz/docs/ethereum-eth-figment-staking.md)
+- [ETH via InfStones](https://docs.yield.xyz/docs/ethereum-eth-infstones-staking.md)
+- [ETH via Luganodes](https://docs.yield.xyz/docs/ethereum-eth-luganodes-staking.md)
+- [ETH via P2P](https://docs.yield.xyz/docs/ethereum-eth-p2p-staking.md)
+- [ETH via Stakewise V3](https://docs.yield.xyz/docs/ethereum-eth-stakewise-staking.md)
+- [Harmony](https://docs.yield.xyz/docs/harmony-one-native-staking.md): Native Harmony staking
+- [Hyperliquid](https://docs.yield.xyz/docs/hyperliquid.md)
+- [Monad](https://docs.yield.xyz/docs/monad.md)
+- [Polygon](https://docs.yield.xyz/docs/ethereum-matic-native-staking.md): Native staking for POL on Ethereum
+- [Sonic](https://docs.yield.xyz/docs/sonic-s-native-staking.md)
+- [The Graph (Arbitrum)](https://docs.yield.xyz/docs/arbitrum-grt-native-staking.md)
+- [The Graph (Ethereum)](https://docs.yield.xyz/docs/ethereum-grt-native-staking.md): Native staking for The Graph
+- [Tron](https://docs.yield.xyz/docs/tron-trx-native-staking.md)
+- [Synthetix 420 Pool](https://docs.yield.xyz/docs/ethereum-snx-420-staking.md)
+- [Non-EVM](https://docs.yield.xyz/docs/non-evm.md)
+- [Agoric](https://docs.yield.xyz/docs/agoric-bld-native-staking.md)
+- [Akash](https://docs.yield.xyz/docs/akash-akt-native-staking.md): Native AKT staking
+- [Axelar](https://docs.yield.xyz/docs/axelar-axl-native-staking.md)
+- [Band Protocol](https://docs.yield.xyz/docs/band-protocol-band-native-staking.md)
+- [Bitsong](https://docs.yield.xyz/docs/bitsong-btsg-native-staking.md)
+- [Bittensor](https://docs.yield.xyz/docs/bittensor-native-staking.md)
+- [Cardano](https://docs.yield.xyz/docs/cardano-ada-native-staking.md)
+- [Chihuahua](https://docs.yield.xyz/docs/chihuahua-huahua-native-staking.md)
+- [Cosmos](https://docs.yield.xyz/docs/cosmos-atom-native-staking.md): Native ATOM staking
+- [Coreum](https://docs.yield.xyz/docs/cosmos-native-staking-copy.md): Native CORE staking
+- [Comdex](https://docs.yield.xyz/docs/omdex-cmdx-native-staking.md)
+- [Crescent](https://docs.yield.xyz/docs/crescent-cre-native-staking.md)
+- [Cronos](https://docs.yield.xyz/docs/cronos-cro-native-staking.md)
+- [Cudos](https://docs.yield.xyz/docs/cudos-cudos-native-staking.md)
+- [dYdX](https://docs.yield.xyz/docs/dydx-native-staking.md)
+- [Fetch.ai](https://docs.yield.xyz/docs/fetch-ai-fet-native-staking.md)
+- [Gravity Bridge](https://docs.yield.xyz/docs/gravity-bridge-graviton-native-staking.md)
+- [Injective](https://docs.yield.xyz/docs/injective-native-staking.md)
+- [IRISnet](https://docs.yield.xyz/docs/irisnet-iris-native-staking.md)
+- [Juno](https://docs.yield.xyz/docs/juno-juno-native-staking.md): Native JUNO staking
+- [Kava](https://docs.yield.xyz/docs/kava-kava-native-staking.md): Native KAVA staking
+- [Ki Network](https://docs.yield.xyz/docs/ki-network-xki-native-staking.md)
+- [Kusama](https://docs.yield.xyz/docs/kusama-native-staking.md)
+- [Mantra](https://docs.yield.xyz/docs/mantra-native-staking.md)
+- [Mars](https://docs.yield.xyz/docs/mars-protocol-mars-native-staking.md)
+- [NEAR](https://docs.yield.xyz/docs/near-near-native-staking.md): Native NEAR staking
+- [Onomy](https://docs.yield.xyz/docs/onomy-nom-native-staking.md)
+- [Osmosis](https://docs.yield.xyz/docs/osmosis-osmo-native-staking.md): Native OSMO staking
+- [Persistence](https://docs.yield.xyz/docs/persistence-xrpt-native-staking.md): Native XRPT staking
+- [Polkadot](https://docs.yield.xyz/docs/polkadot-dot-validator-staking.md)
+- [Polkadot Pooled](https://docs.yield.xyz/docs/polkadot-dot-pool-staking.md)
+- [Quicksilver](https://docs.yield.xyz/docs/quicksilver-qck-native-staking.md)
+- [Regen](https://docs.yield.xyz/docs/regen-regen-native-staking.md)
+- [Secret](https://docs.yield.xyz/docs/secret-scrt-native-staking.md)
+- [Sei](https://docs.yield.xyz/docs/sei-native-staking.md)
+- [Sentinel](https://docs.yield.xyz/docs/sentinel-dvpn-native-staking.md)
+- [Solana](https://docs.yield.xyz/docs/solana-sol-native-multivalidator-staking.md)
+- [Sommelier](https://docs.yield.xyz/docs/sommelier-somm-native-staking.md)
+- [Stargaze](https://docs.yield.xyz/docs/stargaze-stars-native-staking.md): Native STARS staking
+- [Teritori](https://docs.yield.xyz/docs/teritori-tori-native-staking.md)
+- [Tezos](https://docs.yield.xyz/docs/tezos-xtz-native-staking.md)
+- [TON Nomination Pools](https://docs.yield.xyz/docs/ton-ton-nomination-staking.md)
+- [TON via TonWhales](https://docs.yield.xyz/docs/ton-ton-tonwhales-staking.md)
+- [TON via Chorus One Pool](https://docs.yield.xyz/docs/ton-ton-chorus-one-pools-staking.md)
+- [Umee](https://docs.yield.xyz/docs/umee-umee-native-staking.md)
+- [SOL via Marinade Native](https://docs.yield.xyz/docs/sol-via-marinade-native.md): Native SOL staking via Marinade (Max Yield)
+- [AVAX via Benqi](https://docs.yield.xyz/docs/avalanche-avax-liquid-staking.md): Liquid AVAX staking via Benqi
+- [ETH via Lido](https://docs.yield.xyz/docs/ethereum-eth-lido-staking.md): Liquid ETH staking via Lido
+- [ETH via RocketPool](https://docs.yield.xyz/docs/ethereum-eth-reth-staking.md): Liquid ETH staking via Rocket Pool
+- [POL via Lido](https://docs.yield.xyz/docs/ethereum-matic-liquid-staking.md): Liquid MATIC staking via Lido
+- [TRX via JustLend](https://docs.yield.xyz/docs/tron-trx-strx-staking.md)
+- [TON via Tonstakers](https://docs.yield.xyz/docs/ton-ton-tston-staking.md)
+- [BNB via ListaDAO](https://docs.yield.xyz/docs/binance-bnb-slisbnb-staking.md)
+- [SOL via Marinade](https://docs.yield.xyz/docs/sol-via-marinade.md): Liquid SOL staking via Marinade
+- [DeFi](https://docs.yield.xyz/docs/defi-yields.md)
+- [Aave V3](https://docs.yield.xyz/docs/aave-lending.md): Aave lending for any supported token
+- [Angle Protocol](https://docs.yield.xyz/docs/angle-protocol.md)
+- [Blend](https://docs.yield.xyz/docs/blend-lending.md)
+- [Compound V3](https://docs.yield.xyz/docs/compound-v3-lending.md): USDC lending for various markets via Compound V3
+- [Concrete](https://docs.yield.xyz/docs/concrete.md)
+- [Curve](https://docs.yield.xyz/docs/curve.md)
+- [Dolomite](https://docs.yield.xyz/docs/dolomite.md)
+- [Drift](https://docs.yield.xyz/docs/drift.md)
+- [Ethena](https://docs.yield.xyz/docs/ethena-usde-staking.md)
+- [EtherFi](https://docs.yield.xyz/docs/ethereum-eth-etherfi-staking.md)
+- [EtherFi Liquid](https://docs.yield.xyz/docs/etherfi-liquid.md)
+- [Euler](https://docs.yield.xyz/docs/euler.md)
+- [Fluid](https://docs.yield.xyz/docs/fluid.md)
+- [Gearbox](https://docs.yield.xyz/docs/gearbox.md)
+- [Idle Finance](https://docs.yield.xyz/docs/idle-finance.md)
+- [Kamino](https://docs.yield.xyz/docs/kamino.md)
+- [KelpDAO](https://docs.yield.xyz/docs/ethereum-kelpdao-rseth-staking.md)
+- [ListaDAO](https://docs.yield.xyz/docs/listadao.md)
+- [Maple Finance](https://docs.yield.xyz/docs/maple.md)
+- [Morpho - Aave](https://docs.yield.xyz/docs/morpho-aave-lending.md): Aave lending for any supported token
+- [Morpho - Compound](https://docs.yield.xyz/docs/morpho-compound-lending.md): Aave lending for any supported token
+- [Morpho (V1 & V2)](https://docs.yield.xyz/docs/morpho.md)
+- [Renzo](https://docs.yield.xyz/docs/renzo.md)
+- [Spark](https://docs.yield.xyz/docs/spark.md)
+- [Upshift](https://docs.yield.xyz/docs/upshift.md)
+- [Venus](https://docs.yield.xyz/docs/venus-lending.md)
+- [Yearn V2](https://docs.yield.xyz/docs/yearn-vault.md): Yearn vaults for any supported tokens
+- [Yearn V3](https://docs.yield.xyz/docs/yearn-vault-v3.md)
+- [Yuzu syzUSD](https://docs.yield.xyz/docs/yuzu-syzusd.md)
+- [Yuzu yzPrime](https://docs.yield.xyz/docs/yuzu-yzprime.md)
+- [RockSolid](https://docs.yield.xyz/docs/rocksolid.md)
+- [Stablecoins](https://docs.yield.xyz/docs/stablecoin-yields.md)
+- [DEXs & Providing Liquidity](https://docs.yield.xyz/docs/lping.md)
+- [Curve](https://docs.yield.xyz/docs/curve-1.md)
+- [PancakeSwap V3](https://docs.yield.xyz/docs/pancakeswap-v3.md)
+- [RWA](https://docs.yield.xyz/docs/rwa.md)
+- [Midas](https://docs.yield.xyz/docs/midas.md)
+- [Ondo](https://docs.yield.xyz/docs/ondo.md)
+- [Securitize](https://docs.yield.xyz/docs/securitize.md)
+- [Axil Prime Credit 3M (R25)](https://docs.yield.xyz/docs/axil-prime-credit-3m-r25.md)
+- [Creating an API Key](https://docs.yield.xyz/docs/creating-an-api-key.md): How to create Project and API keys on Yield.xyz Dashboard
+- [Configuring Geoblocking](https://docs.yield.xyz/docs/geo-blocking.md): Restrict yields by country or region for compliance
+- [Setting up discretionary fees](https://docs.yield.xyz/docs/setting-up-discretionary-fees.md): Override default fees for specific yields, users, or partner programs
+- [Adding payout wallets](https://docs.yield.xyz/docs/payout-wallets.md): Register the wallets where your integrator fees get deposited
+- [Whitelabel Yields](https://docs.yield.xyz/docs/whitelabel-yields.md): Pick which yield opportunities, staking, liquid staking, lending, or vaults, to enable for your API key
+- [Using Custom RPC URIs](https://docs.yield.xyz/docs/custom-rpc-uris-1.md): Route transaction construction through your own RPC endpoints
+- [Using the Yield.xyz Widget](https://docs.yield.xyz/docs/widget.md): The Yield.xyz Widget is the fastest way to integrate on-chain yield flows into any app — no backend, no custom logic. Built on top of the Yield.xyz API, the Widget supports staking, restaking, vaults, and more — all from a single drop-in interface
+- [Deeplinking](https://docs.yield.xyz/docs/deeplinking-1.md)
+- [Yield.xyz Widget Pro](https://docs.yield.xyz/docs/yieldxyz-widget-pro.md)
+- [Signers Package](https://docs.yield.xyz/docs/signers-packages.md): TypeScript package for signing transactions across EVM and non-EVM networks using mnemonic or Ledger wallets
+- [Rate Limits and Plans](https://docs.yield.xyz/docs/rate-limits-and-plans.md): API rate limits, plan tiers, and when to upgrade
+- [Terms of Use](https://docs.yield.xyz/docs/terms-of-use.md): The full Yield.xyz Terms of Use, covering acceptable use, risk disclosures, liability, and dispute resolution
+- [Privacy Policy](https://docs.yield.xyz/docs/privacy-policy.md): How Yield.xyz collects, uses, and discloses user data, plus your rights and cookie practices
+- [Security Notices](https://docs.yield.xyz/docs/security-notices.md): Risks and mitigation strategies for API key exposure in widget and frontend deployments
+- [Perpetuals Trading Disclaimer](https://docs.yield.xyz/docs/perpetuals-trading-disclaimer.md)
+- [Yield.xyz SSO Setup Guide](https://docs.yield.xyz/docs/yieldxyz-sso-setup-guide.md): Configure SAML or OIDC single sign-on for Yield.xyz dashboard
+- [Roles and permissions](https://docs.yield.xyz/docs/rbac.md): How Yield.xyz scopes dashboard access across Owner, Admin, Operator, and Member roles
+- [Geoblocking](https://docs.yield.xyz/docs/geoblocking.md): Restrict access to Yield.xyz API functionalities based on user location
+- [List of geoblocked countries and regions](https://docs.yield.xyz/docs/list-of-geo-blocked-countries-and-regions.md): Canonical list of jurisdictions blocked across Yield.xyz products
+- [List of geoblocked US states - Focused Blocks](https://docs.yield.xyz/docs/united-states-focused-blocks.md): US states and specific yields blocked due to Coinbase litigation and SEC complaints
+- [Whitelabel Validator Nodes](https://docs.yield.xyz/docs/whitelabel-validator-nodes.md): Dedicated validator nodes deployed and managed by Yield.xyz, branded and fee-customized for your integration
+- [Bring Your Own Node](https://docs.yield.xyz/docs/bring-your-own-node.md): Route yields through your own validator infrastructure
+- [Programmatic Access](https://docs.yield.xyz/docs/programmatic-access.md): Automate project provisioning, API keys, yield enablement, fees, and reporting via the Yield.xyz Programmatic API
+- [Programmatic Access Guide](https://docs.yield.xyz/docs/programmatic-access-guide.md): Guide to automating project management, API keys, yields, fees, and reports via the Programmatic API
+- [FAQs](https://docs.yield.xyz/docs/faqs.md): Frequently asked questions about Yield.xyz
+- [Legacy docs (V1)](https://docs.yield.xyz/docs/legacy-docs-v1.md)
+- [API 2.0 Migration Guide](https://docs.yield.xyz/docs/api-20-migration-guide-workflow-and-schema-changes.md)
+- [AgentKit Overview](https://docs.yield.xyz/docs/agents-overview.md): How Yield.xyz gives AI agents the tools and context to use on-chain yield.
+- [MCP Server](https://docs.yield.xyz/docs/mcp-server.md): The MCP server that connects Claude Desktop, Cursor, and other agents to Yield.xyz.
+- [Tool Reference](https://docs.yield.xyz/docs/tool-reference.md): The 22 MCP tools explained, purpose, example prompts, and the transaction format returned.
+- [Skills](https://docs.yield.xyz/docs/skills.md): Modular agent capabilities that turn yield intents into reliable actions.
+- [OpenClaw Skills](https://docs.yield.xyz/docs/openclaw-skills.md): Install and configure the Yield.xyz AgentKit skill for OpenClaw.
+- [Key Rules](https://docs.yield.xyz/docs/key-rules.md): The required rules every agent must follow when building and executing yield transactions.
+- [SuperSkills](https://docs.yield.xyz/docs/superskills.md): Pre-built agent capabilities like morning briefings, rate alerts, and portfolio rotation.
+- [AgentKit Skills](https://docs.yield.xyz/docs/agent-skills.md): The core AgentKit Skill that gives any agent Yield.xyz's full tool surface.
+- [Yield.xyz AgentKit Skill](https://docs.yield.xyz/docs/yieldxyz-agentkit.md): The base AgentKit Skill for developers who already have their own signing infrastructure.
+- [Yield.xyz AgentKit Privy Skill](https://docs.yield.xyz/docs/yieldxyz-agentkit-privy-skill.md): Pairs AgentKit with Privy for policy-gated, TEE-secured autonomous agent execution.
+- [Yield.xyz AgentKit MoonPay Skill](https://docs.yield.xyz/docs/yieldxyz-agentkit-moonpay-skill.md): Pairs AgentKit and MoonPay for end-to-end execution with fully local signing.
+- [Yield.xyz AgentKit Builder Skill](https://docs.yield.xyz/docs/yieldxyz-agentkit-builder-skill.md)
+- [Claude Plugin](https://docs.yield.xyz/docs/claude-plugin.md): One-command install to use Yield.xyz AgentKit directly inside Claude Code.
+
+## API Reference
+- [Authentication](https://docs.yield.xyz/reference/authentication.md)
+- [List all yield opportunities](https://docs.yield.xyz/reference/yieldscontroller_getyields.md): Retrieve a paginated list of available yield opportunities across all supported networks and protocols.
+- [Get yield metadata](https://docs.yield.xyz/reference/yieldscontroller_getyield.md): Retrieve detailed information about a specific yield opportunity including APY, tokens, protocol details, and more.
+- [Get yield validators](https://docs.yield.xyz/reference/yieldscontroller_getyieldvalidators.md): Retrieve a paginated list of validators available for staking or delegation for this yield opportunity.
+- [List enabled networks](https://docs.yield.xyz/reference/networkscontroller_getnetworks.md): Retrieve networks with enabled yield opportunities for the authenticated project.
+- [Get all providers](https://docs.yield.xyz/reference/providerscontroller_getproviders.md): Returns a paginated list of all providers, including both protocol and validator providers.
+- [Get provider by ID](https://docs.yield.xyz/reference/providerscontroller_getprovider.md): Returns detailed information about a specific provider.
+- [Get yield campaigns](https://docs.yield.xyz/reference/yieldscontroller_getyieldcampaigns.md): Returns campaign metadata for the given yield opportunity within the API key project scope.
+- [List tokens with available yields](https://docs.yield.xyz/reference/tokenscontroller_gettokens.md): Retrieve tokens that have at least one enabled yield available for this project. Optionally filter by one or more networks and yield types. Returns the full list by default; callers should respect `total` and use `offset`/`limit`, as a default page size may be introduced in future.
+- [Get balances across multiple yields and networks](https://docs.yield.xyz/reference/yieldscontroller_getaggregatebalances.md): Retrieve balances for multiple wallet addresses across different networks and yield opportunities. Send an array of balance requests - each request can specify a yieldId (optional for chain scanning), address, network, and custom arguments. This is the same format as the single yield balance endpoint but in array form. Duplicate requests (same yieldId + address + network) are automatically deduplicated, with specific yield requests taking precedence over chain scans.
+- [Get balances for a specific yield](https://docs.yield.xyz/reference/yieldscontroller_getyieldbalances.md): Retrieve all balances associated with a yield opportunity for a specific wallet address, including active, pending, claimable, and withdrawable balances. The network is automatically determined from the yield configuration.
+- [Get historical balance snapshots for a yield](https://docs.yield.xyz/reference/yieldscontroller_getbalancehistory.md): Returns a chronological time series of balance snapshots for a wallet address within a yield. Each entry reflects the position at a specific timestamp or block. Supports configurable sampling intervals and point-in-time queries. Only available for ERC4626 vaults with indexed transfer history.
+- [Get reward history](https://docs.yield.xyz/reference/yieldscontroller_getyieldrewards.md): Retrieve a chronological list of on-chain reward events for an indexed yield. Each record includes timestamp, token metadata, amount, reward source, and transaction reference.
+- [Get user actions](https://docs.yield.xyz/reference/actionscontroller_getactions.md): Retrieve all actions performed by a user, with optional filtering by yield, status, category, etc. In the future, this may include personalized action recommendations.
+- [Get action details](https://docs.yield.xyz/reference/actionscontroller_getaction.md): Retrieve detailed information about a specific action including current status, transactions, and execution details.
+- [Enter a yield](https://docs.yield.xyz/reference/actionscontroller_enteryield.md): Generate the transactions needed to enter a yield position with the provided parameters.
+- [Exit a yield](https://docs.yield.xyz/reference/actionscontroller_exityield.md): Generate the transactions needed to exit a yield position with the provided parameters.
+- [Manage a yield](https://docs.yield.xyz/reference/actionscontroller_manageyield.md): Generate the transactions needed to perform management actions on a yield position.
+- [Submit transaction hash](https://docs.yield.xyz/reference/transactionscontroller_submittransactionhash.md): Submit the transaction hash after broadcasting a transaction to the blockchain. This updates the transaction status and enables tracking.
+- [Submit transaction](https://docs.yield.xyz/reference/transactionscontroller_submittransaction.md): Submit the transaction to the blockchain.
+- [Get transaction details](https://docs.yield.xyz/reference/transactionscontroller_gettransaction.md): Retrieve detailed information about a specific transaction including current status, hash, and execution details.
+- [Get risk ratings for a yield](https://docs.yield.xyz/reference/yieldscontroller_getyieldrisk.md): Retrieve consolidated risk ratings from third-party providers for a yield.
+- [Get historical reward rate snapshots for a yield](https://docs.yield.xyz/reference/yieldscontroller_getyieldrewardratehistory.md): Returns a chronological time series of reward rate snapshots for the specified yield, suitable for charting and analytics. Supports configurable time ranges, sampling intervals (day/week/month), and pagination.
+- [Get historical TVL snapshots for a yield](https://docs.yield.xyz/reference/yieldscontroller_getyieldtvlhistory.md): Returns a chronological time series of Total Value Locked for the specified yield, expressed in underlying token units. Supports configurable time ranges, sampling intervals (day/week/month), and pagination.
+- [Get the KYC status of an address for a yield](https://docs.yield.xyz/reference/kyccontroller_getstatus.md): Returns the normalized KYC status for the given address. Yields without a KYC requirement return not_required.
+- [Health check](https://docs.yield.xyz/reference/healthcontroller_health.md): Get the health status of the yield API with current timestamp
+- [List all providers](https://docs.yield.xyz/reference/providerscontroller_getproviders-1.md): Retrieve a list of available perps trading providers with their supported actions and argument schemas.
+- [Get provider details](https://docs.yield.xyz/reference/providerscontroller_getprovider-1.md): Retrieve detailed information about a specific perps trading provider
+- [List all markets](https://docs.yield.xyz/reference/marketscontroller_getmarkets.md): Retrieve a paginated list of available perps markets across all supported providers and instruments.
+- [Get market by ID](https://docs.yield.xyz/reference/marketscontroller_getmarketbyid.md): Retrieve a single market by its ID, including chart display configuration.
+- [Get historical candles](https://docs.yield.xyz/reference/marketscontroller_getcandles.md): Retrieve historical OHLCV candle data for a market. Limited to 5000 candles per request.
+- [Execute an action](https://docs.yield.xyz/reference/actionscontroller_executeaction.md): Generate unsigned transactions for a trading action (open/close positions, manage leverage, set stop loss/take profit, fund/withdraw). Returns transaction data ready to be signed by the user.
+- [Submit transaction](https://docs.yield.xyz/reference/transactionscontroller_submittransaction-1.md): Submit a signed transaction to the blockchain or protocol, or record a transaction hash if already submitted. Provide either signedPayload (to have us broadcast) or transactionHash (if already submitted). The transaction must have been created via the actions endpoint.
+- [Get action by ID](https://docs.yield.xyz/reference/actionscontroller_getaction-1.md): Retrieve detailed information about a specific action including current status, transactions, and execution details.
+- [Get user actions](https://docs.yield.xyz/reference/actionscontroller_getactions-1.md): Retrieve all actions performed by a user on a specific provider, with optional filtering by status and action type. Returns a paginated list ordered by most recent first.
+- [Get perp events](https://docs.yield.xyz/reference/eventscontroller_getevents.md): Retrieve async venue outcomes (fills, liquidations, SL/TP triggers) for a user on a specific provider. Returns a paginated list ordered by most recent first.
+- [Get event by ID](https://docs.yield.xyz/reference/eventscontroller_getevent.md): Retrieve a single perp event by its UUID.
+- [Get unified perp activity](https://docs.yield.xyz/reference/activitycontroller_getactivity.md): Paginated chronological feed of timeline events and user actions for an address on one or more providers (newest first). Pass providerId or providerIds. Events use occurredAt; actions use createdAt.
+- [Get positions](https://docs.yield.xyz/reference/portfoliocontroller_getpositions.md): Retrieve active positions for a wallet address. Pass providerId or providerIds (one or more providers).
+- [Get orders](https://docs.yield.xyz/reference/portfoliocontroller_getorders.md): Retrieve open orders for a wallet address. Pass providerId or providerIds (one or more providers).
+- [Get account balance](https://docs.yield.xyz/reference/portfoliocontroller_getbalances.md): Retrieve account balance and margin for one provider. Use providerId or providerIds with exactly one provider (not multiple).
+- [Health check](https://docs.yield.xyz/reference/healthcontroller_health-1.md): Get the health status of the perps API with current timestamp
+- [Get user positions](https://docs.yield.xyz/reference/positionscontroller_getpositions_v1.md): Retrieve all supply and borrow positions for a user address across specified integration and network.
+- [Get user liquidation history](https://docs.yield.xyz/reference/positionscontroller_getliquidations_v1.md): Retrieve a paginated history of Morpho Blue liquidation events for a borrower address, read from the indexed store. This is the only place a fully-liquidated (closed) position can be retrieved, since it no longer appears in GET /v1/positions. Ordered by most recent first.
+- [List actions](https://docs.yield.xyz/reference/actionscontroller_getactions_v1.md): Get a paginated list of actions, with optional filtering by address, integration, status, etc.
+- [Execute a borrow action](https://docs.yield.xyz/reference/actionscontroller_executeaction_v1.md): Generate unsigned transactions for a lending/borrowing action. Returns transaction(s) to sign. Submit each signed transaction via POST /transactions/:id/submit. For async multi-step flows (e.g., cross-chain bridges), hasNextStep will be true — call POST /actions/:id/step after confirmation to get the next transaction(s).
+- [Get action by ID](https://docs.yield.xyz/reference/actionscontroller_getaction_v1.md): Retrieve detailed information about a specific action including current status, transactions, and step progress.
+- [Get next step transaction(s)](https://docs.yield.xyz/reference/actionscontroller_step_v1.md): For async multi-step actions (e.g., cross-chain bridges, delayed withdrawals), retrieve the next transaction(s) after the previous step has been confirmed on-chain. Call this when hasNextStep is true on the action response.
+- [Submit signed transaction](https://docs.yield.xyz/reference/transactionscontroller_submittransaction_v1.md): Submit a signed transaction. Provide signedPayload to have us broadcast it to the blockchain, or transactionHash if already submitted by the client.
+- [List all integrations](https://docs.yield.xyz/reference/integrationscontroller_getintegrations_v1.md): Retrieve a list of available lending/borrowing integrations (e.g., Aave, Spark, Morpho) with their supported actions and networks.
+- [Get integration details](https://docs.yield.xyz/reference/integrationscontroller_getintegration_v1.md): Retrieve detailed information about a specific lending/borrowing integration
+- [List all lending markets](https://docs.yield.xyz/reference/marketscontroller_getmarkets_v1.md): Retrieve a paginated list of available lending markets across all supported integrations and networks. Each market represents a token that can be supplied or borrowed.
+- [Get a single market by ID](https://docs.yield.xyz/reference/marketscontroller_getmarketbyid_v1.md): Retrieve details for a specific lending market. Useful for deep linking into a specific market (e.g., cbBTC/USDT on Morpho Blue).
+- [Health check](https://docs.yield.xyz/reference/healthcontroller_health-2.md): Get the health status of the borrow API with current timestamp
+- [Per-provider manual health overrides](https://docs.yield.xyz/reference/healthcontroller_providershealth.md)
+
+## Recipes
+- [Entering a Yield Position](https://docs.yield.xyz/recipes/enter-a-position-on-a-yield.md)
+- [Get Portfolio Balances Across Networks](https://docs.yield.xyz/recipes/get-address-balances-in-multiple-networks.md)
+- [Discover Yield Opportunities on Base](https://docs.yield.xyz/recipes/stake-eth-with-lido.md)
+
+## Changelog
+- [June 20 - June 26](https://docs.yield.xyz/changelog/june-20-june-26.md)
+- [June 13 - June 19](https://docs.yield.xyz/changelog/june-13-june-19.md)
+- [June 6 – June 12](https://docs.yield.xyz/changelog/june-6-june-12.md)
+- [May 30 – June 5](https://docs.yield.xyz/changelog/may-30-june-5.md)
+- [May 23 – May 29](https://docs.yield.xyz/changelog/may-23-may-29.md)

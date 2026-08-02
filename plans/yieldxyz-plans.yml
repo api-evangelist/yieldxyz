@@ -1,0 +1,72 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Yield.xyz
+providerId: yieldxyz
+generated: '2026-07-21'
+method: searched
+created: '2026-07-21'
+modified: '2026-07-21'
+tags:
+- Yield
+- DeFi
+- Staking
+description: |
+  Yield.xyz offers three access tiers. Every tier includes the full yield integration
+  suite; tiers differ by API rate limit and Optimized Allocator Vault (OAV) deployment
+  ceiling. Published pricing figures are not disclosed on the plans page; contact
+  sales for Standard/Pro pricing.
+sources:
+- https://docs.yield.xyz/docs/rate-limits-and-plans
+plans:
+- id: yieldxyz-trial
+  name: Trial
+  type: free
+  description: Full integration suite at 1 request/sec with up to 3 OAV deployments.
+  entries:
+  - label: Rate limit
+    name: rate_limit
+    type: fixed
+    metric: requests_per_second
+    limit: 1
+    timeFrame: second
+  - label: OAV deployments
+    name: oav_deployments
+    type: fixed
+    metric: deployments
+    limit: 3
+    timeFrame: account
+- id: yieldxyz-standard
+  name: Standard
+  type: subscription
+  description: 100 requests/sec with up to 10 OAV deployments.
+  entries:
+  - label: Rate limit
+    name: rate_limit
+    type: fixed
+    metric: requests_per_second
+    limit: 100
+    timeFrame: second
+  - label: OAV deployments
+    name: oav_deployments
+    type: fixed
+    metric: deployments
+    limit: 10
+    timeFrame: account
+- id: yieldxyz-pro
+  name: Pro
+  type: subscription
+  description: 1,000+ requests/sec with up to 100 OAV deployments.
+  entries:
+  - label: Rate limit
+    name: rate_limit
+    type: fixed
+    metric: requests_per_second
+    limit: 1000
+    timeFrame: second
+  - label: OAV deployments
+    name: oav_deployments
+    type: fixed
+    metric: deployments
+    limit: 100
+    timeFrame: account

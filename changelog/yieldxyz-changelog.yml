@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.yield.xyz/changelog
+scheme: weekly-dated
+description: |
+  Yield.xyz publishes a dated changelog on a weekly cadence covering new yield
+  integrations, API features, and bug fixes. Recent window captured below.
+entries:
+- date_range: June 20 - June 26, 2026
+  url: https://docs.yield.xyz/changelog/june-20-june-26
+  additions:
+  - ether.fi Liquid ETH now available on Ethereum via the Veda BoringVault with
+    configurable cooldown.
+  - 20 new Morpho V2 vaults across Base, Ethereum, and Katana.
+  - Ondo OUSG/USDY expose investment schedules with live 24h deposit/redemption caps.
+  - Midas mTBILL investment schedule with deposit/redemption windows and settlement timing.
+  changes:
+  - "Yield API: share-denominated withdrawals via shareAmount / shareAmountRaw."
+  - ERC-4626 yields now report uniqueUsers and averagePositionSize where available.
+  breaking:
+  - Synthetix sUSD 420 staking deprecated on Ethereum and Optimism; positions remain
+    queryable but new deposits are blocked.
+  fixes:
+  - Hyperliquid spot available balance now excludes held funds (e.g. open limit orders).
+  - Aave V3, Compound V3, and SparkLend vault withdrawals redeem exactly the requested amount.
+- date_range: June 13 - June 19, 2026
+  url: https://docs.yield.xyz/changelog/june-13-june-19
+- date_range: June 6 - June 12, 2026
+  url: https://docs.yield.xyz/changelog/june-6-june-12
+- date_range: May 30 - June 5, 2026
+  url: https://docs.yield.xyz/changelog/may-30-june-5
+- date_range: May 23 - May 29, 2026
+  url: https://docs.yield.xyz/changelog/may-23-may-29

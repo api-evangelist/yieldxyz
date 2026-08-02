@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.yield.xyz/docs/creating-an-api-key
+docs: https://docs.yield.xyz/docs/creating-an-api-key
+summary:
+  types: [apiKey]
+  api_key_in: [header]
+schemes:
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter_name: X-API-KEY
+  description: |
+    API keys are created within a Project on the Yield.xyz Dashboard. The key value
+    is passed as the X-API-KEY header on every request (and used when integrating the
+    Widget). A 401 is returned on unauthenticated requests.
+  sources: [https://docs.yield.xyz/docs/creating-an-api-key]
+dashboard_access:
+  rbac: https://docs.yield.xyz/docs/rbac
+  sso: https://docs.yield.xyz/docs/yieldxyz-sso-setup-guide
+  roles: [Owner, Admin, Operator, Member]
+  sso_protocols: [SAML, OIDC]
+programmatic_access:
+  docs: https://docs.yield.xyz/docs/programmatic-access
+  description: |
+    A Programmatic API automates project provisioning, API key creation, yield
+    enablement, fees, and reporting.
+notes: |
+  Key auth only — no OAuth2 scope surface is documented, so scopes/ is intentionally
+  omitted. Dashboard access (distinct from API auth) supports RBAC roles and SAML/OIDC SSO.

@@ -1,8 +1,13 @@
 aid: yieldxyz
 name: Yield.xyz
-description: 'Yield.xyz is a company surfaced as a portfolio company of multicoin-capital and added to
-  the API Evangelist network as a stub for enrichment. Sector: crypto-web3. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: 'Yield.xyz (formerly StakeKit) is a non-custodial, on-chain yield infrastructure
+  API that lets wallets, custodians, exchanges, and AI agents integrate staking, restaking,
+  liquid staking, DeFi lending, vaults, RWA yields, and perpetuals across 80+ networks
+  and thousands of yield opportunities through a single standardized interface. The
+  REST API discovers yields, constructs complete unsigned transaction flows (enter/exit/manage),
+  and returns unified balances while signing and execution stay entirely with the
+  developer. It powers platforms including Ledger, Zerion, and Tangem, and ships SDKs,
+  an embeddable Widget, an AgentKit MCP server, and packaged agent Skills.'
 url: https://raw.githubusercontent.com/api-evangelist/yieldxyz/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,18 +15,119 @@ x-backed-by:
 - multicoin-capital
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v1
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://yield.xyz/images/og-image.png
 tags:
 - Company
 - Crypto Web3
-apis: []
+- Staking
+- DeFi
+- Yield
+- Blockchain
+- Restaking
+- Vaults
+- Web3 Infrastructure
+- Non-Custodial
+apis:
+- name: Yield.xyz API
+  description: Non-custodial yield REST API to discover yields, construct unsigned
+    transaction flows (enter/exit/manage), and read unified balances across 80+ networks.
+  humanURL: https://docs.yield.xyz/
+  baseURL: https://api.yield.xyz
+  tags:
+  - Staking
+  - DeFi
+  - Yield
+  properties:
+  - type: Documentation
+    url: https://docs.yield.xyz/docs/getting-started
+  - type: APIReference
+    url: https://docs.yield.xyz/reference
+  - type: GettingStarted
+    url: https://docs.yield.xyz/docs/getting-started
+  - type: Authentication
+    url: authentication/yieldxyz-authentication.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/yieldxyz-domain-security.yml
 - type: Website
   url: https://yield.xyz
+- type: DeveloperPortal
+  url: https://docs.yield.xyz/
+- type: Documentation
+  url: https://docs.yield.xyz/docs/getting-started
+- type: APIReference
+  url: https://docs.yield.xyz/reference
+- type: GettingStarted
+  url: https://docs.yield.xyz/docs/getting-started
+- type: GitHubOrganization
+  url: https://github.com/stakekit
+- type: Support
+  url: https://docs.yield.xyz/docs/faqs
+- type: Pricing
+  url: https://docs.yield.xyz/docs/rate-limits-and-plans
+- type: SignUp
+  url: https://dashboard.stakek.it/sign-up/register-interest
+- type: Login
+  url: https://dashboard.stakek.it/login
+- type: TermsOfService
+  url: https://docs.yield.xyz/docs/terms-of-use
+- type: PrivacyPolicy
+  url: https://docs.yield.xyz/docs/privacy-policy
+- type: StatusPage
+  url: https://status.yield.xyz
+- type: ChangeLog
+  url: https://docs.yield.xyz/changelog
+- type: TrustCenter
+  url: https://trust.yield.xyz
+- type: LLMsTxt
+  url: llms/yieldxyz-llms.txt
+- type: MCPServer
+  url: mcp/yieldxyz-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/yieldxyz-packages.yml
+- type: SDKs
+  url: packages/yieldxyz-packages.yml
+- type: Components
+  url: components/yieldxyz-components.yml
+- type: Authentication
+  url: authentication/yieldxyz-authentication.yml
+- type: Conventions
+  url: conventions/yieldxyz-conventions.yml
+- type: Lifecycle
+  url: lifecycle/yieldxyz-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/yieldxyz-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/yieldxyz-rate-limits.yml
+- type: DataModel
+  url: data-model/yieldxyz-data-model.yml
+- type: WellKnown
+  url: well-known/yieldxyz-well-known.yml

@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: live probes of /.well-known/ on Yield.xyz hosts
+hosts:
+- host: https://api.yield.xyz
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://yield.xyz
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://docs.yield.xyz
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+notes: |
+  No /.well-known/ discovery documents (security.txt, openid-configuration,
+  oauth-authorization-server, api-catalog, ai-plugin.json) are published on the
+  website, docs, or API hosts. The API uses X-API-KEY header auth (no OAuth/OIDC
+  discovery surface). Machine-readable agent discovery is instead served via
+  https://docs.yield.xyz/llms.txt and the hosted MCP server at https://mcp.yield.xyz/mcp.

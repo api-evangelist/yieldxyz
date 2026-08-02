@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.yield.xyz/docs/getting-started
+versioning:
+  scheme: uri-path
+  current: v1
+  notes: |
+    API paths are versioned under /v1 (e.g. /v1/yields, /v1/actions). A prior
+    generation ("API 2.0 migration") and legacy V1 docs are documented as a
+    migration path.
+  migration_guide: https://docs.yield.xyz/docs/api-20-migration-guide-workflow-and-schema-changes
+  legacy_docs: https://docs.yield.xyz/docs/legacy-docs-v1
+deprecation:
+  policy_notes: |
+    Deprecations are announced through the weekly changelog. Deprecated yields keep
+    existing positions queryable while blocking new deposits (e.g. Synthetix sUSD 420
+    staking deprecated on Ethereum and Optimism, June 2026).
+  changelog: https://docs.yield.xyz/changelog
+sla:
+  notes: |
+    Multi-validator staking across 30+ validators with SLAs and uptime guarantees;
+    Preferred Validator Network selects on uptime, performance, and slashing history.
+  preferred_validator_network: https://docs.yield.xyz/docs/preferred-validator-network
+status_page: https://status.yield.xyz
+plans: https://docs.yield.xyz/docs/rate-limits-and-plans

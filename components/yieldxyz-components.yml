@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.yield.xyz/docs/widget
+description: |
+  Yield.xyz ships embeddable, client-side UI components that render on-chain yield
+  flows with no backend — distinct from the server-side SDKs in packages/.
+families:
+- name: Yield Widget
+  description: |
+    The fastest way to integrate on-chain yield flows (staking, restaking, vaults)
+    into any app — a single drop-in interface built on top of the Yield.xyz API.
+  loaders:
+  - kind: react-component
+    package: "@stakekit/widget"
+    entry: SKApp
+    install: npm install @stakekit/widget
+  - kind: bundled-js
+    package: "@stakekit/widget/bundle"
+    entry: renderSKWidget()
+    description: For non-React JavaScript; renders into a DOM container.
+  - kind: react-native-webview
+    package: "@stakekit/use-inject-provider"
+    description: Injects the wallet provider into a react-native-webview for mobile wallets.
+  docs: https://docs.yield.xyz/docs/widget
+  pro: https://docs.yield.xyz/docs/yieldxyz-widget-pro
+  deeplinking: https://docs.yield.xyz/docs/deeplinking-1
+- name: Perps Widget
+  description: Self-custodial perpetuals trading widget built with React.
+  docs: https://docs.yield.xyz/docs/perps-widget-v1
+  repo: https://github.com/stakekit/perps-widget
