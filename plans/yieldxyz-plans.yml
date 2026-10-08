@@ -70,3 +70,41 @@ plans:
     metric: deployments
     limit: 100
     timeFrame: account
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units:
+  - rate
+  plans:
+  - name: Trial
+    access: free
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    - rate
+    periods:
+    - second
+    - term
+  - name: Standard
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - other
+    - rate
+    periods:
+    - second
+    - term
+  - name: Pro
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - other
+    - rate
+    periods:
+    - second
+    - term
