@@ -1,0 +1,4029 @@
+{
+  "endpoint": "https://mcp.yield.xyz/mcp",
+  "captured": "2026-10-20",
+  "method": "initialize + tools/list (anonymous, no tool called; roadmap#992)",
+  "protocol_version": "2025-06-18",
+  "server_info": {
+    "name": "yield-mcp-server",
+    "version": "1.0.0"
+  },
+  "result": {
+    "tools": [
+      {
+        "name": "yields_get_all",
+        "title": "List Yield Opportunities",
+        "description": "Discover yield opportunities across all supported networks and protocols. Use this to find yield IDs before calling yields_get, actions_enter, or any balance/validator tools. Filter by network, token symbol, or type to narrow results. For RWA yields (types [\"real_world_asset\"]) each item also includes a full kyc object (eligibility, investor tiers, jurisdictions, authorizeUrl) — read it directly instead of calling yields_get per yield.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "token": {
+              "description": "Token symbol e.g. \"ETH\", \"USDC\" or a contract address, to filter by output/reward token.",
+              "type": "string"
+            },
+            "sort": {
+              "description": "Server-side sort order. Results are returned pre-sorted by the server, do not re-sort client-side.",
+              "type": "string",
+              "enum": [
+                "statusEnterAsc",
+                "statusEnterDesc",
+                "statusExitAsc",
+                "statusExitDesc",
+                "rewardRateAsc",
+                "rewardRateDesc"
+              ]
+            },
+            "search": {
+              "description": "Free-text search across yield names, token names, provider names, and metadata descriptions.",
+              "type": "string"
+            },
+            "networks": {
+              "description": "Filter by one or more networks e.g. [\"base\", \"arbitrum\"] or [\"ethereum\"]. Use a single-element array for one network. Never make multiple calls per network — pass all networks in one array.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "types": {
+              "description": "Filter by one or more yield types e.g. [\"staking\", \"lending\"]. Values: staking, fixed_yield, lending, restaking, vault, concentrated_liquidity_pool, liquidity_pool, real_world_asset.",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "staking",
+                  "lending",
+                  "restaking",
+                  "vault",
+                  "concentrated_liquidity_pool",
+                  "liquidity_pool",
+                  "real_world_asset",
+                  "fixed_yield"
+                ]
+              }
+            },
+            "yieldIds": {
+              "description": "Batch fetch up to 100 specific yields by ID.",
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inputTokens": {
+              "description": "Filter by one or more accepted deposit token symbols or addresses e.g. [\"USDC\"] or [\"USDC\", \"ETH\"]. Yields matching any of the tokens are returned.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "providers": {
+              "description": "Filter by one or more provider IDs e.g. [\"lido\", \"aave\"].",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "hasCooldownPeriod": {
+              "description": "Filter by whether the yield has a cooldown period.",
+              "type": "boolean"
+            },
+            "hasWarmupPeriod": {
+              "description": "Filter by whether the yield has a warmup period.",
+              "type": "boolean"
+            },
+            "limit": {
+              "default": 20,
+              "description": "Max results per page (1-50, default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            },
+            "offset": {
+              "default": 0,
+              "description": "Pagination offset. Increment by limit to fetch the next page.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yields_get",
+        "title": "Get Yield Metadata",
+        "description": "Get full metadata for a single yield opportunity: fees, lock-up and cooldown periods, reward mechanics, and whether entry/exit is currently open. Show this to the user before they commit to entering a position.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID e.g. \"ethereum-eth-lido-staking\""
+            }
+          },
+          "required": [
+            "yieldId"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "network": {
+              "type": "string"
+            },
+            "chainId": {
+              "type": "string"
+            },
+            "token": {
+              "type": "object",
+              "properties": {
+                "symbol": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "decimals": {
+                  "type": "number"
+                },
+                "network": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "logoURI": {
+                  "type": "string"
+                },
+                "coinGeckoId": {
+                  "type": "string"
+                },
+                "isPoints": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "symbol",
+                "name",
+                "decimals",
+                "network"
+              ],
+              "additionalProperties": {}
+            },
+            "tokens": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "symbol": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "decimals": {
+                    "type": "number"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "logoURI": {
+                    "type": "string"
+                  },
+                  "coinGeckoId": {
+                    "type": "string"
+                  },
+                  "isPoints": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "symbol",
+                  "name",
+                  "decimals",
+                  "network"
+                ],
+                "additionalProperties": {}
+              }
+            },
+            "inputTokens": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "symbol": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "decimals": {
+                    "type": "number"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "logoURI": {
+                    "type": "string"
+                  },
+                  "coinGeckoId": {
+                    "type": "string"
+                  },
+                  "isPoints": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "symbol",
+                  "name",
+                  "decimals",
+                  "network"
+                ],
+                "additionalProperties": {}
+              }
+            },
+            "outputToken": {
+              "type": "object",
+              "properties": {
+                "symbol": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "decimals": {
+                  "type": "number"
+                },
+                "network": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "logoURI": {
+                  "type": "string"
+                },
+                "coinGeckoId": {
+                  "type": "string"
+                },
+                "isPoints": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "symbol",
+                "name",
+                "decimals",
+                "network"
+              ],
+              "additionalProperties": {}
+            },
+            "rewardRate": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "number"
+                },
+                "rateType": {
+                  "type": "string"
+                },
+                "components": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "rate": {
+                        "type": "number"
+                      },
+                      "rateType": {
+                        "type": "string"
+                      },
+                      "token": {
+                        "type": "object",
+                        "properties": {
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "network": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "logoURI": {
+                            "type": "string"
+                          },
+                          "coinGeckoId": {
+                            "type": "string"
+                          },
+                          "isPoints": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "symbol",
+                          "name",
+                          "decimals",
+                          "network"
+                        ],
+                        "additionalProperties": {}
+                      },
+                      "yieldSource": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "rate",
+                      "rateType",
+                      "token",
+                      "yieldSource"
+                    ],
+                    "additionalProperties": {}
+                  }
+                }
+              },
+              "required": [
+                "total",
+                "rateType",
+                "components"
+              ],
+              "additionalProperties": {}
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "enter": {
+                  "type": "boolean"
+                },
+                "exit": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "enter",
+                "exit"
+              ],
+              "additionalProperties": {}
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "logoURI": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "documentation": {
+                  "type": "string"
+                },
+                "underMaintenance": {
+                  "type": "boolean"
+                },
+                "deprecated": {
+                  "type": "boolean"
+                },
+                "supportedStandards": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "logoURI",
+                "description",
+                "documentation",
+                "underMaintenance",
+                "deprecated",
+                "supportedStandards"
+              ],
+              "additionalProperties": {}
+            },
+            "mechanics": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "rewardClaiming": {
+                  "type": "string"
+                },
+                "rewardSchedule": {
+                  "type": "string"
+                },
+                "gasFeeToken": {
+                  "type": "object",
+                  "properties": {
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "decimals": {
+                      "type": "number"
+                    },
+                    "network": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "logoURI": {
+                      "type": "string"
+                    },
+                    "coinGeckoId": {
+                      "type": "string"
+                    },
+                    "isPoints": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "symbol",
+                    "name",
+                    "decimals",
+                    "network"
+                  ],
+                  "additionalProperties": {}
+                },
+                "requiresValidatorSelection": {
+                  "type": "boolean"
+                },
+                "lockupPeriod": {
+                  "type": "object",
+                  "properties": {
+                    "seconds": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "seconds"
+                  ],
+                  "additionalProperties": {}
+                },
+                "cooldownPeriod": {
+                  "type": "object",
+                  "properties": {
+                    "seconds": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "seconds"
+                  ],
+                  "additionalProperties": {}
+                },
+                "warmupPeriod": {
+                  "type": "object",
+                  "properties": {
+                    "seconds": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "seconds"
+                  ],
+                  "additionalProperties": {}
+                },
+                "fee": {
+                  "type": "object",
+                  "properties": {
+                    "deposit": {
+                      "type": "string"
+                    },
+                    "withdrawal": {
+                      "type": "string"
+                    },
+                    "management": {
+                      "type": "string"
+                    },
+                    "performance": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": {}
+                },
+                "entryLimits": {
+                  "type": "object",
+                  "properties": {
+                    "minimum": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maximum": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "subsequentMinimum": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "minimum",
+                    "maximum"
+                  ],
+                  "additionalProperties": {}
+                },
+                "requirements": {
+                  "type": "object",
+                  "properties": {
+                    "kycRequired": {
+                      "type": "boolean"
+                    },
+                    "kycUrl": {
+                      "type": "string"
+                    },
+                    "kyc": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "kycRequired"
+                  ],
+                  "additionalProperties": {}
+                },
+                "supportsLedgerWalletApi": {
+                  "type": "boolean"
+                },
+                "extraTransactionFormatsSupported": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "arguments": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                },
+                "possibleFeeTakingMechanisms": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "rewardClaiming",
+                "rewardSchedule",
+                "gasFeeToken"
+              ],
+              "additionalProperties": {}
+            },
+            "providerId": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "statistics": {
+              "type": "object",
+              "properties": {
+                "tvlUsd": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tvl": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "uniqueUsers": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "averagePositionSizeUsd": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "averagePositionSize": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tvlRaw": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": {}
+            },
+            "state": {
+              "type": "object",
+              "properties": {
+                "pricePerShareState": {
+                  "type": "object",
+                  "properties": {
+                    "price": {
+                      "type": "number"
+                    },
+                    "shareToken": {
+                      "type": "object",
+                      "properties": {
+                        "symbol": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "decimals": {
+                          "type": "number"
+                        },
+                        "network": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "logoURI": {
+                          "type": "string"
+                        },
+                        "coinGeckoId": {
+                          "type": "string"
+                        },
+                        "isPoints": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "symbol",
+                        "name",
+                        "decimals",
+                        "network"
+                      ],
+                      "additionalProperties": {}
+                    },
+                    "quoteToken": {
+                      "type": "object",
+                      "properties": {
+                        "symbol": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "decimals": {
+                          "type": "number"
+                        },
+                        "network": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "logoURI": {
+                          "type": "string"
+                        },
+                        "coinGeckoId": {
+                          "type": "string"
+                        },
+                        "isPoints": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "symbol",
+                        "name",
+                        "decimals",
+                        "network"
+                      ],
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "price",
+                    "shareToken",
+                    "quoteToken"
+                  ],
+                  "additionalProperties": {}
+                },
+                "concentratedLiquidityPoolState": {
+                  "type": "object",
+                  "properties": {
+                    "baseApr": {
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "tickSpacing": {
+                      "type": "number"
+                    },
+                    "minTick": {
+                      "type": "number"
+                    },
+                    "maxTick": {
+                      "type": "number"
+                    },
+                    "volume24hUsd": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "fee24hUsd": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "tvlUsd": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "feeTier": {
+                      "type": "number"
+                    },
+                    "baseToken": {
+                      "type": "object",
+                      "properties": {
+                        "symbol": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "decimals": {
+                          "type": "number"
+                        },
+                        "network": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "logoURI": {
+                          "type": "string"
+                        },
+                        "coinGeckoId": {
+                          "type": "string"
+                        },
+                        "isPoints": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "symbol",
+                        "name",
+                        "decimals",
+                        "network"
+                      ],
+                      "additionalProperties": {}
+                    },
+                    "quoteToken": {
+                      "type": "object",
+                      "properties": {
+                        "symbol": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "decimals": {
+                          "type": "number"
+                        },
+                        "network": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "logoURI": {
+                          "type": "string"
+                        },
+                        "coinGeckoId": {
+                          "type": "string"
+                        },
+                        "isPoints": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "symbol",
+                        "name",
+                        "decimals",
+                        "network"
+                      ],
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "baseApr",
+                    "price",
+                    "tickSpacing",
+                    "minTick",
+                    "maxTick",
+                    "volume24hUsd",
+                    "fee24hUsd",
+                    "tvlUsd",
+                    "feeTier",
+                    "baseToken",
+                    "quoteToken"
+                  ],
+                  "additionalProperties": {}
+                },
+                "capacityState": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "type": "string"
+                    },
+                    "max": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "remaining": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "current",
+                    "max",
+                    "remaining"
+                  ],
+                  "additionalProperties": {}
+                },
+                "liquidityState": {
+                  "type": "object",
+                  "properties": {
+                    "liquidity": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "utilization": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "additionalProperties": {}
+                },
+                "allocations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "address": {
+                        "type": "string"
+                      },
+                      "network": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "yieldId": {
+                        "type": "string"
+                      },
+                      "providerId": {
+                        "type": "string"
+                      },
+                      "allocation": {
+                        "type": "string"
+                      },
+                      "allocationUsd": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "weight": {
+                        "type": "number"
+                      },
+                      "targetWeight": {
+                        "type": "number"
+                      },
+                      "rewardRate": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "total": {
+                                "type": "number"
+                              },
+                              "rateType": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "total",
+                              "rateType"
+                            ],
+                            "additionalProperties": {}
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "tvl": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "tvlUsd": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "maxCapacity": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "remainingCapacity": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "address",
+                      "network",
+                      "name",
+                      "allocation",
+                      "weight",
+                      "targetWeight"
+                    ],
+                    "additionalProperties": {}
+                  }
+                }
+              },
+              "additionalProperties": {}
+            },
+            "risk": {
+              "type": "object",
+              "properties": {
+                "ratings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "rating": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "credora",
+                          "stakingRewards"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "rating",
+                      "source"
+                    ],
+                    "additionalProperties": {}
+                  }
+                }
+              },
+              "required": [
+                "ratings"
+              ],
+              "additionalProperties": {}
+            },
+            "curator": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "description": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "logoURI": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "id",
+            "network",
+            "token",
+            "tokens",
+            "inputTokens",
+            "rewardRate",
+            "status",
+            "metadata",
+            "mechanics",
+            "providerId"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "yields_get_validators",
+        "title": "Get Yield Validators",
+        "description": "List validators for delegation-based yields such as Cosmos native staking or ETH native staking. Use the validator address when calling actions_enter or actions_exit. Filter by preferred=true to show only curated validators.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID from yields_get_all. Must be a delegation-based yield e.g. \"cosmos-atom-native-staking\"."
+            },
+            "limit": {
+              "default": 20,
+              "description": "Max results per page (1-50, default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            },
+            "offset": {
+              "default": 0,
+              "description": "Pagination offset. Increment by limit to fetch the next page.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "preferred": {
+              "description": "Pass true to return only curated/recommended validators.",
+              "type": "boolean"
+            },
+            "name": {
+              "description": "Filter validators by name (case-insensitive, partial match).",
+              "type": "string"
+            },
+            "status": {
+              "description": "Filter by validator status e.g. \"active\", \"jailed\".",
+              "type": "string"
+            },
+            "address": {
+              "description": "Filter by validator address.",
+              "type": "string"
+            },
+            "provider": {
+              "description": "Filter by provider ID.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "yieldId"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "number"
+            },
+            "offset": {
+              "type": "number"
+            },
+            "limit": {
+              "type": "number"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "rewardRate": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "number"
+                      },
+                      "rateType": {
+                        "type": "string"
+                      },
+                      "components": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "rate": {
+                              "type": "number"
+                            },
+                            "rateType": {
+                              "type": "string"
+                            },
+                            "token": {
+                              "type": "object",
+                              "properties": {
+                                "symbol": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "decimals": {
+                                  "type": "number"
+                                },
+                                "network": {
+                                  "type": "string"
+                                },
+                                "address": {
+                                  "type": "string"
+                                },
+                                "logoURI": {
+                                  "type": "string"
+                                },
+                                "coinGeckoId": {
+                                  "type": "string"
+                                },
+                                "isPoints": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "symbol",
+                                "name",
+                                "decimals",
+                                "network"
+                              ],
+                              "additionalProperties": {}
+                            },
+                            "yieldSource": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "rate",
+                            "rateType",
+                            "token",
+                            "yieldSource"
+                          ],
+                          "additionalProperties": {}
+                        }
+                      }
+                    },
+                    "required": [
+                      "total",
+                      "rateType",
+                      "components"
+                    ],
+                    "additionalProperties": {}
+                  },
+                  "commission": {
+                    "type": "number"
+                  },
+                  "tvlUsd": {
+                    "type": "string"
+                  },
+                  "tvl": {
+                    "type": "string"
+                  },
+                  "votingPower": {
+                    "type": "number"
+                  },
+                  "preferred": {
+                    "type": "boolean"
+                  },
+                  "minimumStake": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "logoURI": {
+                    "type": "string"
+                  },
+                  "website": {
+                    "type": "string"
+                  },
+                  "providerId": {
+                    "type": "string"
+                  },
+                  "remainingPossibleStake": {
+                    "type": "string"
+                  },
+                  "remainingSlots": {
+                    "type": "number"
+                  },
+                  "nominatorCount": {
+                    "type": "number"
+                  },
+                  "subnet": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "tokenSymbol": {
+                        "type": "string"
+                      },
+                      "tvl": {
+                        "type": "string"
+                      },
+                      "pricePerShare": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id"
+                    ],
+                    "additionalProperties": {}
+                  },
+                  "tvlRaw": {
+                    "type": "string"
+                  },
+                  "provider": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "logoURI": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "website": {
+                        "type": "string"
+                      },
+                      "tvlUsd": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "references": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "rank": {
+                        "type": "number"
+                      },
+                      "preferred": {
+                        "type": "boolean"
+                      },
+                      "revshare": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "uniqueId": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id"
+                    ],
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "address"
+                ],
+                "additionalProperties": {}
+              }
+            }
+          },
+          "required": [
+            "total",
+            "offset",
+            "limit",
+            "items"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "yields_get_balances",
+        "title": "Get Yield Balances",
+        "description": "Get current balances and pending actions for a wallet address across one or more yields. Always call this before actions_exit or actions_manage — the passthrough value required by those tools comes from balances[].pendingActions[].passthrough.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "description": "Wallet address to query. EVM: \"0xAbc...\", Cosmos: bech32 address e.g. \"cosmos1...\"."
+            },
+            "network": {
+              "type": "string",
+              "description": "Network to query e.g. \"base\", \"ethereum\""
+            },
+            "yieldIds": {
+              "description": "Optional: filter to specific yield IDs only",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "address",
+            "network"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "actions_enter",
+        "title": "Enter a Yield",
+        "description": "Construct unsigned transactions to stake or deposit into a yield. Does NOT execute — the user must sign each transaction exactly as returned (never modify unsignedTransaction). Amounts are human-readable strings (\"1.5\" = 1.5 tokens, not wei). Submit transactions in stepIndex order; for the synchronous execution pattern, wait for on-chain confirmation before submitting the next one. For ERC-4626 vaults (including RWAs like Midas), inspect yields_get → mechanics.arguments.enter.fields[] to discover yield-specific options (e.g. useMaxAllowance, receiverAddress).",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID from yields_get_all e.g. \"ethereum-eth-lido-staking\"."
+            },
+            "address": {
+              "type": "string",
+              "description": "Wallet address that will own the position."
+            },
+            "amount": {
+              "type": "string",
+              "description": "Token units e.g. \"1.5\" for 1.5 ETH"
+            },
+            "inputToken": {
+              "description": "Deposit token address, for yields that accept more than one deposit token. Required when yields_get → mechanics.arguments.enter.fields[] lists an inputToken field with required: true; that field's options[] holds the valid addresses, which also appear as yields_get → inputTokens[].address. Use \"0x\" to deposit the network's native token.",
+              "type": "string",
+              "minLength": 1
+            },
+            "inputTokenNetwork": {
+              "description": "Network of the input token e.g. \"ethereum\". Only for cross-chain deposits, where the deposit token is not on the vault's own network.",
+              "type": "string",
+              "minLength": 1
+            },
+            "validatorAddress": {
+              "description": "Validator to delegate to. Required when yields_get returns mechanics.requiresValidatorSelection=true.",
+              "type": "string"
+            },
+            "executionMode": {
+              "description": "Transaction execution mode. Defaults to \"individual\". \"batched\" is reserved for future use — batch mode is not yet available across all yields and should not be used until fully enabled.",
+              "type": "string",
+              "enum": [
+                "individual",
+                "batched"
+              ]
+            },
+            "useMaxAllowance": {
+              "description": "Optional. ERC-4626 vault convenience flag. true = approve the maximum (uint256 max) allowance, so subsequent deposits skip a fresh APPROVAL step. false = approve only the exact amount being deposited. Honored only when listed in yields_get enter schema.",
+              "type": "boolean"
+            },
+            "receiverAddress": {
+              "description": "Optional. ERC-4626 vault convenience field. Address that should receive the minted vault shares. Defaults to the position owner (`address`). Honored only when listed in yields_get enter schema.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "yieldId",
+            "address",
+            "amount"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "intent": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "yieldId": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "amount": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountRaw": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountUsd": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "executionPattern": {
+              "type": "string",
+              "enum": [
+                "synchronous",
+                "asynchronous",
+                "batch"
+              ]
+            },
+            "status": {
+              "type": "string"
+            },
+            "transactions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "hash": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "broadcastedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "signedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "unsignedTransaction": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          }
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "stepIndex": {
+                    "type": "number"
+                  },
+                  "gasEstimate": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "error": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "explorerUrl": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "isMessage": {
+                    "type": "boolean"
+                  },
+                  "annotatedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "structuredTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "network",
+                  "status",
+                  "type",
+                  "title",
+                  "hash",
+                  "createdAt",
+                  "broadcastedAt",
+                  "signedTransaction"
+                ],
+                "additionalProperties": {}
+              }
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "completedAt": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rawArguments": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "string"
+                    },
+                    "amounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "validatorAddress": {
+                      "type": "string"
+                    },
+                    "validatorAddresses": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "receiverAddress": {
+                      "type": "string"
+                    },
+                    "providerId": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "number"
+                    },
+                    "inputToken": {
+                      "type": "string"
+                    },
+                    "inputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "outputToken": {
+                      "type": "string"
+                    },
+                    "outputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "subnetId": {
+                      "type": "number"
+                    },
+                    "tronResource": {
+                      "type": "string"
+                    },
+                    "feeConfigurationId": {
+                      "type": "string"
+                    },
+                    "cosmosPubKey": {
+                      "type": "string"
+                    },
+                    "tezosPubKey": {
+                      "type": "string"
+                    },
+                    "cAddressBech": {
+                      "type": "string"
+                    },
+                    "pAddressBech": {
+                      "type": "string"
+                    },
+                    "executionMode": {
+                      "type": "string",
+                      "enum": [
+                        "individual",
+                        "batched"
+                      ]
+                    },
+                    "ledgerWalletAPICompatible": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "intent",
+            "type",
+            "yieldId",
+            "address",
+            "amount",
+            "amountRaw",
+            "amountUsd",
+            "executionPattern",
+            "status",
+            "transactions",
+            "createdAt",
+            "completedAt",
+            "rawArguments"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "actions_exit",
+        "title": "Exit a Yield",
+        "description": "Construct unsigned transactions to unstake or withdraw from a yield. Does NOT execute — the user must sign each transaction exactly as returned (never modify unsignedTransaction). Amounts are human-readable strings (\"1.5\" = 1.5 tokens, not wei). Submit transactions in stepIndex order. Call yields_get_balances first to verify the staked balance. To complete a PENDING withdrawal (e.g. claiming after a cooldown) that carries a passthrough value, use actions_manage — exit does NOT accept passthrough. For RWA and ERC-4626 vaults, inspect yields_get → mechanics.arguments.exit.fields[] to discover yield-specific options (e.g. useInstantExecution, useMaxAmount, receiverAddress).",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID from yields_get_all e.g. \"ethereum-eth-lido-staking\"."
+            },
+            "address": {
+              "type": "string",
+              "description": "Wallet address that owns the position."
+            },
+            "amount": {
+              "description": "Amount to withdraw in token units e.g. \"1.5\". Optional when useMaxAmount is true on supported yields.",
+              "type": "string"
+            },
+            "outputToken": {
+              "description": "Withdrawal token address, for yields that can pay out in more than one token. Required when yields_get → mechanics.arguments.exit.fields[] lists an outputToken field with required: true; that field's options[] holds the valid addresses. Use \"0x\" to receive the network's native token.",
+              "type": "string",
+              "minLength": 1
+            },
+            "outputTokenNetwork": {
+              "description": "Network of the output token e.g. \"ethereum\". Only for cross-chain withdrawals, where the destination token is not on the vault's own network.",
+              "type": "string",
+              "minLength": 1
+            },
+            "validatorAddress": {
+              "description": "Validator address to undelegate from. Required for delegation-based yields.",
+              "type": "string"
+            },
+            "executionMode": {
+              "description": "Transaction execution mode. Defaults to \"individual\". \"batched\" is reserved for future use — batch mode is not yet available across all yields and should not be used until fully enabled.",
+              "type": "string",
+              "enum": [
+                "individual",
+                "batched"
+              ]
+            },
+            "useInstantExecution": {
+              "description": "Optional. Available on yields whose exit schema lists this field (e.g. Midas mTBILL, Upshift vaults, Marinade on Solana). true = instant redemption (settles same block, may incur a higher fee — Midas docs quote up to 50 bps for mTBILL). false or omitted = standard redemption (queues; for RWAs settlement may take 1-7 business days — poll yields_get_balances and read the \"exiting\" entry's `date` field for the expected settlement timestamp). Distinct from executionMode (which controls per-step batching, not redemption path).",
+              "type": "boolean"
+            },
+            "useAutoClaim": {
+              "description": "Optional. Available on yields whose exit schema lists this field (e.g. Nest RWA vaults). true = authorize the redeem operator to auto-claim settled async redemptions (adds a one-time per-wallet operator approval), so no manual claim is needed after settlement. false or omitted = claim manually once the redemption settles. Honored only when listed in yields_get exit schema.",
+              "type": "boolean"
+            },
+            "useMaxAmount": {
+              "description": "Optional. ERC-4626 vault convenience flag. true = redeem the full position (overrides amount). Honored only when listed in yields_get exit schema.",
+              "type": "boolean"
+            },
+            "receiverAddress": {
+              "description": "Optional. ERC-4626 vault convenience field. Address that should receive the underlying token from the redemption. Defaults to the position owner (`address`). Honored only when listed in yields_get exit schema.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "yieldId",
+            "address"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "intent": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "yieldId": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "amount": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountRaw": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountUsd": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "executionPattern": {
+              "type": "string",
+              "enum": [
+                "synchronous",
+                "asynchronous",
+                "batch"
+              ]
+            },
+            "status": {
+              "type": "string"
+            },
+            "transactions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "hash": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "broadcastedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "signedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "unsignedTransaction": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          }
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "stepIndex": {
+                    "type": "number"
+                  },
+                  "gasEstimate": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "error": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "explorerUrl": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "isMessage": {
+                    "type": "boolean"
+                  },
+                  "annotatedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "structuredTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "network",
+                  "status",
+                  "type",
+                  "title",
+                  "hash",
+                  "createdAt",
+                  "broadcastedAt",
+                  "signedTransaction"
+                ],
+                "additionalProperties": {}
+              }
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "completedAt": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rawArguments": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "string"
+                    },
+                    "amounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "validatorAddress": {
+                      "type": "string"
+                    },
+                    "validatorAddresses": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "receiverAddress": {
+                      "type": "string"
+                    },
+                    "providerId": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "number"
+                    },
+                    "inputToken": {
+                      "type": "string"
+                    },
+                    "inputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "outputToken": {
+                      "type": "string"
+                    },
+                    "outputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "subnetId": {
+                      "type": "number"
+                    },
+                    "tronResource": {
+                      "type": "string"
+                    },
+                    "feeConfigurationId": {
+                      "type": "string"
+                    },
+                    "cosmosPubKey": {
+                      "type": "string"
+                    },
+                    "tezosPubKey": {
+                      "type": "string"
+                    },
+                    "cAddressBech": {
+                      "type": "string"
+                    },
+                    "pAddressBech": {
+                      "type": "string"
+                    },
+                    "executionMode": {
+                      "type": "string",
+                      "enum": [
+                        "individual",
+                        "batched"
+                      ]
+                    },
+                    "ledgerWalletAPICompatible": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "intent",
+            "type",
+            "yieldId",
+            "address",
+            "amount",
+            "amountRaw",
+            "amountUsd",
+            "executionPattern",
+            "status",
+            "transactions",
+            "createdAt",
+            "completedAt",
+            "rawArguments"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "actions_manage",
+        "title": "Manage a Yield",
+        "description": "Construct unsigned transactions for a pending action such as claiming rewards, restaking, or unlocking funds. Does NOT execute — the user must sign. The action type and passthrough must come from yields_get_balances balances[].pendingActions[] — do not guess these values.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID from yields_get_all e.g. \"ethereum-eth-lido-staking\"."
+            },
+            "address": {
+              "type": "string",
+              "description": "Wallet address that owns the position."
+            },
+            "action": {
+              "type": "string",
+              "enum": [
+                "STAKE",
+                "UNSTAKE",
+                "WITHDRAW_REQUEST",
+                "INSTANT_WITHDRAW",
+                "CLAIM_REWARDS",
+                "AUTO_SWEEP_UNSTAKE_REWARDS",
+                "AUTO_SWEEP_WITHDRAW_REWARDS",
+                "RESTAKE_REWARDS",
+                "WITHDRAW",
+                "WITHDRAW_ALL",
+                "RESTAKE",
+                "CLAIM_UNSTAKED",
+                "UNLOCK_LOCKED",
+                "STAKE_LOCKED",
+                "VOTE",
+                "REVOKE",
+                "VOTE_LOCKED",
+                "REVOTE",
+                "REBOND",
+                "MIGRATE",
+                "VERIFY_WITHDRAW_CREDENTIALS",
+                "DELEGATE",
+                "MERGE",
+                "CANCEL_PENDING"
+              ],
+              "description": "Action type from yields_get_balances balances[].pendingActions[].type e.g. \"CLAIM_REWARDS\", \"UNLOCK\"."
+            },
+            "passthrough": {
+              "type": "string",
+              "description": "Required — from yields_get_balances pendingActions[].passthrough"
+            },
+            "amount": {
+              "description": "Optional. Human-readable amount for partial reward claims e.g. \"10.5\". Omit to claim full amount.",
+              "type": "string"
+            },
+            "executionMode": {
+              "description": "Transaction execution mode. Defaults to \"individual\". \"batched\" is reserved for future use — batch mode is not yet available across all yields and should not be used until fully enabled.",
+              "type": "string",
+              "enum": [
+                "individual",
+                "batched"
+              ]
+            }
+          },
+          "required": [
+            "yieldId",
+            "address",
+            "action",
+            "passthrough"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "intent": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "yieldId": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "amount": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountRaw": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountUsd": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "executionPattern": {
+              "type": "string",
+              "enum": [
+                "synchronous",
+                "asynchronous",
+                "batch"
+              ]
+            },
+            "status": {
+              "type": "string"
+            },
+            "transactions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "hash": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "broadcastedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "signedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "unsignedTransaction": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          }
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "stepIndex": {
+                    "type": "number"
+                  },
+                  "gasEstimate": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "error": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "explorerUrl": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "isMessage": {
+                    "type": "boolean"
+                  },
+                  "annotatedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "structuredTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "network",
+                  "status",
+                  "type",
+                  "title",
+                  "hash",
+                  "createdAt",
+                  "broadcastedAt",
+                  "signedTransaction"
+                ],
+                "additionalProperties": {}
+              }
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "completedAt": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rawArguments": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "string"
+                    },
+                    "amounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "validatorAddress": {
+                      "type": "string"
+                    },
+                    "validatorAddresses": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "receiverAddress": {
+                      "type": "string"
+                    },
+                    "providerId": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "number"
+                    },
+                    "inputToken": {
+                      "type": "string"
+                    },
+                    "inputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "outputToken": {
+                      "type": "string"
+                    },
+                    "outputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "subnetId": {
+                      "type": "number"
+                    },
+                    "tronResource": {
+                      "type": "string"
+                    },
+                    "feeConfigurationId": {
+                      "type": "string"
+                    },
+                    "cosmosPubKey": {
+                      "type": "string"
+                    },
+                    "tezosPubKey": {
+                      "type": "string"
+                    },
+                    "cAddressBech": {
+                      "type": "string"
+                    },
+                    "pAddressBech": {
+                      "type": "string"
+                    },
+                    "executionMode": {
+                      "type": "string",
+                      "enum": [
+                        "individual",
+                        "batched"
+                      ]
+                    },
+                    "ledgerWalletAPICompatible": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "intent",
+            "type",
+            "yieldId",
+            "address",
+            "amount",
+            "amountRaw",
+            "amountUsd",
+            "executionPattern",
+            "status",
+            "transactions",
+            "createdAt",
+            "completedAt",
+            "rawArguments"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "submit_hash",
+        "title": "Submit Transaction Hash",
+        "description": "Submit the on-chain transaction hash after the user has signed and broadcasted a transaction. This updates the transaction status internally and enables tracking. Call this once per transaction, using the transactionId and hash from the broadcast result.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "transactionId": {
+              "type": "string",
+              "description": "The unique identifier of the transaction (UUID from the action flow)"
+            },
+            "hash": {
+              "type": "string",
+              "maxLength": 100,
+              "description": "The on-chain transaction hash returned after broadcasting, e.g. \"0x1234…abcdef\""
+            }
+          },
+          "required": [
+            "transactionId",
+            "hash"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "network": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "hash": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "broadcastedAt": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "signedTransaction": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "unsignedTransaction": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "stepIndex": {
+              "type": "number"
+            },
+            "gasEstimate": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "error": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "explorerUrl": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "isMessage": {
+              "type": "boolean"
+            },
+            "annotatedTransaction": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "structuredTransaction": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "network",
+            "status",
+            "type",
+            "title",
+            "hash",
+            "createdAt",
+            "broadcastedAt",
+            "signedTransaction"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "get_transaction",
+        "title": "Get Transaction Status",
+        "description": "Poll the status of a single transaction by its ID. Use after submit_hash to confirm on-chain success. status is one of: NOT_FOUND, CREATED, BLOCKED, WAITING_FOR_SIGNATURE, SIGNED, BROADCASTED, PENDING, CONFIRMED, FAILED, SKIPPED. Terminal states: CONFIRMED, FAILED, SKIPPED.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "transactionId": {
+              "type": "string",
+              "description": "The transaction UUID returned by actions_enter, actions_exit, or actions_manage — same ID passed to submit_hash."
+            }
+          },
+          "required": [
+            "transactionId"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "network": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "hash": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "broadcastedAt": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "signedTransaction": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "unsignedTransaction": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "stepIndex": {
+              "type": "number"
+            },
+            "gasEstimate": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "error": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "explorerUrl": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "isMessage": {
+              "type": "boolean"
+            },
+            "annotatedTransaction": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "structuredTransaction": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "network",
+            "status",
+            "type",
+            "title",
+            "hash",
+            "createdAt",
+            "broadcastedAt",
+            "signedTransaction"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "actions_get",
+        "title": "Get Action Status",
+        "description": "Get the current status and transactions of a specific action by its ID. Use this to check whether an action is CREATED, PROCESSING, SUCCESS, or FAILED. Essential for async execution patterns and semi-autonomous Privy flows where approval may take time.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "actionId": {
+              "type": "string",
+              "description": "The action UUID returned by actions_enter, actions_exit, or actions_manage."
+            }
+          },
+          "required": [
+            "actionId"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "intent": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "yieldId": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "amount": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountRaw": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "amountUsd": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "executionPattern": {
+              "type": "string",
+              "enum": [
+                "synchronous",
+                "asynchronous",
+                "batch"
+              ]
+            },
+            "status": {
+              "type": "string"
+            },
+            "transactions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "hash": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "broadcastedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "signedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "unsignedTransaction": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          }
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "stepIndex": {
+                    "type": "number"
+                  },
+                  "gasEstimate": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "error": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "explorerUrl": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "isMessage": {
+                    "type": "boolean"
+                  },
+                  "annotatedTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "structuredTransaction": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "network",
+                  "status",
+                  "type",
+                  "title",
+                  "hash",
+                  "createdAt",
+                  "broadcastedAt",
+                  "signedTransaction"
+                ],
+                "additionalProperties": {}
+              }
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "completedAt": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rawArguments": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "string"
+                    },
+                    "amounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "validatorAddress": {
+                      "type": "string"
+                    },
+                    "validatorAddresses": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "receiverAddress": {
+                      "type": "string"
+                    },
+                    "providerId": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "number"
+                    },
+                    "inputToken": {
+                      "type": "string"
+                    },
+                    "inputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "outputToken": {
+                      "type": "string"
+                    },
+                    "outputTokenNetwork": {
+                      "type": "string"
+                    },
+                    "subnetId": {
+                      "type": "number"
+                    },
+                    "tronResource": {
+                      "type": "string"
+                    },
+                    "feeConfigurationId": {
+                      "type": "string"
+                    },
+                    "cosmosPubKey": {
+                      "type": "string"
+                    },
+                    "tezosPubKey": {
+                      "type": "string"
+                    },
+                    "cAddressBech": {
+                      "type": "string"
+                    },
+                    "pAddressBech": {
+                      "type": "string"
+                    },
+                    "executionMode": {
+                      "type": "string",
+                      "enum": [
+                        "individual",
+                        "batched"
+                      ]
+                    },
+                    "ledgerWalletAPICompatible": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": {}
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "intent",
+            "type",
+            "yieldId",
+            "address",
+            "amount",
+            "amountRaw",
+            "amountUsd",
+            "executionPattern",
+            "status",
+            "transactions",
+            "createdAt",
+            "completedAt",
+            "rawArguments"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "actions_get_all",
+        "title": "Get Action History",
+        "description": "List past and pending actions for a wallet address. Filter by status, intent, type, or yieldId. Use this to answer \"show me my pending actions\", \"what did I do recently?\", or to find actions waiting for approval.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string",
+              "description": "Wallet address to query actions for."
+            },
+            "statuses": {
+              "description": "Filter by one or more action statuses. Valid values: \"CREATED\" (submitted, not yet sent on-chain), \"PROCESSING\" (in-flight on-chain), \"WAITING_FOR_NEXT\" (multi-step action awaiting next tx), \"SUCCESS\" (confirmed), \"FAILED\" (reverted or errored), \"CANCELED\" (user-cancelled), \"STALE\" (timed out). Pass multiple to get all pending e.g. [\"CREATED\", \"PROCESSING\"].",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "CANCELED",
+                  "CREATED",
+                  "WAITING_FOR_NEXT",
+                  "PROCESSING",
+                  "FAILED",
+                  "SUCCESS",
+                  "STALE"
+                ]
+              }
+            },
+            "intent": {
+              "description": "Filter by intent: \"enter\", \"exit\", or \"manage\".",
+              "type": "string",
+              "enum": [
+                "enter",
+                "manage",
+                "exit"
+              ]
+            },
+            "type": {
+              "description": "Filter by action type e.g. \"STAKE\", \"UNSTAKE\", \"CLAIM_REWARDS\".",
+              "type": "string",
+              "enum": [
+                "STAKE",
+                "UNSTAKE",
+                "WITHDRAW_REQUEST",
+                "INSTANT_WITHDRAW",
+                "CLAIM_REWARDS",
+                "AUTO_SWEEP_UNSTAKE_REWARDS",
+                "AUTO_SWEEP_WITHDRAW_REWARDS",
+                "RESTAKE_REWARDS",
+                "WITHDRAW",
+                "WITHDRAW_ALL",
+                "RESTAKE",
+                "CLAIM_UNSTAKED",
+                "UNLOCK_LOCKED",
+                "STAKE_LOCKED",
+                "VOTE",
+                "REVOKE",
+                "VOTE_LOCKED",
+                "REVOTE",
+                "REBOND",
+                "MIGRATE",
+                "VERIFY_WITHDRAW_CREDENTIALS",
+                "DELEGATE",
+                "MERGE",
+                "CANCEL_PENDING"
+              ]
+            },
+            "yieldId": {
+              "description": "Filter by yield ID e.g. \"base-usdc-aave-v3-lending\".",
+              "type": "string"
+            },
+            "network": {
+              "description": "Filter by network e.g. \"base\", \"ethereum\".",
+              "type": "string"
+            },
+            "limit": {
+              "default": 20,
+              "description": "Max results (1-100, default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "offset": {
+              "default": 0,
+              "description": "Pagination offset.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "address"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "networks_get_all",
+        "title": "List Supported Networks",
+        "description": "Discover all supported networks with their IDs, names, and categories. Use this to get valid network slugs before calling yields_get_all, yields_get_balances, or any other tool that requires a network parameter.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "search": {
+              "description": "Filter networks by name or id (case-insensitive, min 2 chars). e.g. \"eth\", \"cosmos\", \"base\".",
+              "type": "string",
+              "minLength": 2
+            },
+            "category": {
+              "description": "Filter by network category. e.g. \"evm\" returns all EVM networks, \"cosmos\" returns all Cosmos chains.",
+              "type": "string",
+              "enum": [
+                "evm",
+                "cosmos",
+                "substrate",
+                "misc"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yields_get_reward_rate_history",
+        "title": "Get Reward Rate History",
+        "description": "Get historical APY/reward rate snapshots for a yield over time. Use this to answer \"has this yield's APY been stable?\" or to chart APY trends. Defaults to last 30 days, daily interval.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID e.g. \"ethereum-eth-lido-staking\"."
+            },
+            "period": {
+              "description": "Predefined time window: \"1d\", \"7d\", \"30d\", \"90d\", \"1y\", \"all\". Ignored if from/to are set. Default: \"30d\".",
+              "type": "string",
+              "enum": [
+                "1d",
+                "7d",
+                "30d",
+                "90d",
+                "1y",
+                "all"
+              ]
+            },
+            "from": {
+              "description": "Start of time range (ISO 8601) e.g. \"2025-01-01T00:00:00Z\". Overrides period.",
+              "type": "string"
+            },
+            "to": {
+              "description": "End of time range (ISO 8601). Defaults to now.",
+              "type": "string"
+            },
+            "interval": {
+              "description": "Sampling resolution: \"day\", \"week\", or \"month\". Default: \"day\".",
+              "type": "string",
+              "enum": [
+                "day",
+                "week",
+                "month"
+              ]
+            },
+            "limit": {
+              "default": 30,
+              "description": "Max data points to return (1-365, default 30).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 365
+            },
+            "offset": {
+              "default": 0,
+              "description": "Pagination offset.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "yieldId"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yields_get_tvl_history",
+        "title": "Get TVL History",
+        "description": "Get historical Total Value Locked snapshots for a yield. Use this to assess protocol health — a declining TVL is a warning sign. Defaults to last 30 days, daily interval.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID e.g. \"base-usdc-aave-v3-lending\"."
+            },
+            "period": {
+              "description": "Predefined time window: \"1d\", \"7d\", \"30d\", \"90d\", \"1y\", \"all\". Ignored if from/to are set. Default: \"30d\".",
+              "type": "string",
+              "enum": [
+                "1d",
+                "7d",
+                "30d",
+                "90d",
+                "1y",
+                "all"
+              ]
+            },
+            "from": {
+              "description": "Start of time range (ISO 8601). Overrides period.",
+              "type": "string"
+            },
+            "to": {
+              "description": "End of time range (ISO 8601). Defaults to now.",
+              "type": "string"
+            },
+            "interval": {
+              "description": "Sampling resolution: \"day\", \"week\", or \"month\". Default: \"day\".",
+              "type": "string",
+              "enum": [
+                "day",
+                "week",
+                "month"
+              ]
+            },
+            "limit": {
+              "default": 30,
+              "description": "Max data points to return (1-365, default 30).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 365
+            },
+            "offset": {
+              "default": 0,
+              "description": "Pagination offset.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "yieldId"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yields_get_risk",
+        "title": "Get Yield Risk Data",
+        "description": "Get detailed risk parameters for a yield. More granular than the risk field in yields_get — returns individual risk items by category (e.g. smart contract, liquidity, counterparty). Use this when the user asks about protocol safety or risk.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID e.g. \"ethereum-eth-lido-staking\"."
+            }
+          },
+          "required": [
+            "yieldId"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "providers_get_all",
+        "title": "List Providers",
+        "description": "Discover all supported protocols and validator providers (e.g. Lido, Aave, Morpho). Returns name, id, description, website, TVL, and type. Use this to answer \"what protocols does Yield.xyz support?\" or to get valid provider IDs for yields_get_all filters.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "default": 20,
+              "description": "Max results per page (1-100, default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "offset": {
+              "default": 0,
+              "description": "Pagination offset.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yields_get_kyc_status",
+        "title": "Get Yield KYC Status",
+        "description": "Get the normalized KYC status of a wallet address for a yield. Use this before actions_enter on yields that gate deposits behind KYC (e.g. RWAs like Securitize/Superstate). Yields without a KYC requirement return \"not_required\". When the status is \"not_started\" or \"pending\", the response may include an authorizeUrl pointing to the issuer's KYC portal.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "yieldId": {
+              "type": "string",
+              "description": "Yield ID from yields_get_all e.g. \"ethereum-ustb-securitize-rwa\"."
+            },
+            "address": {
+              "type": "string",
+              "description": "Wallet address to check KYC status for."
+            }
+          },
+          "required": [
+            "yieldId",
+            "address"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "kycStatus": {
+              "type": "string",
+              "enum": [
+                "not_required",
+                "not_started",
+                "pending",
+                "approved",
+                "rejected"
+              ]
+            },
+            "authorizeUrl": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kycStatus"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      {
+        "name": "yield_get_api_spec",
+        "title": "Fetch Yield.xyz OpenAPI Spec",
+        "description": "BUILDER TOOL — fetches the live Yield.xyz OpenAPI spec (https://api.yield.xyz/docs.json). Use when you need: exact request body schemas, field constraints (min/max/enum), error response shapes, or operationIds for any endpoint. Accepts an optional `endpoint` filter (e.g. \"/v1/actions/enter\", \"/v1/yields/{yieldId}/validators\") and an optional `query` to search across paths. Returns structured field definitions, required flags, and all HTTP error codes for that endpoint. Use this instead of guessing field names — the spec is the ground truth. Also use this to look up: what errors can a specific endpoint return, what are the exact parameter constraints, what does a 400/403/422/429 response look like.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "endpoint": {
+              "description": "Optional: filter to a specific path, e.g. \"/v1/actions/enter\" or \"/v1/yields/{yieldId}/validators\". Partial match works.",
+              "type": "string"
+            },
+            "method": {
+              "default": "all",
+              "description": "HTTP method filter. Default: all methods.",
+              "type": "string",
+              "enum": [
+                "get",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "all"
+              ]
+            },
+            "query": {
+              "description": "Optional: keyword search across path + operationId + summary. E.g. \"validator\", \"balances\", \"enter\".",
+              "type": "string"
+            },
+            "section": {
+              "default": "all",
+              "description": "What to return: \"endpoints\" for path+method details, \"schemas\" for component schemas, \"errors\" for all error codes across the spec, \"all\" for endpoints + errors. Component schemas are large, so \"all\" excludes them — request \"schemas\" explicitly.",
+              "type": "string",
+              "enum": [
+                "endpoints",
+                "schemas",
+                "errors",
+                "all"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yield_lookup_docs",
+        "title": "Search Yield.xyz Docs",
+        "description": "BUILDER TOOL — use when developing an integration, NOT for end-user actions or live data. Searches the live Yield.xyz documentation index (llms.txt) in real time and returns the most relevant page links with title, section, and description. Pick the one or two most relevant results and read them with yield_fetch_doc. If nothing relevant is returned, use the other docs tools in this MCP (never the action tools). Use for: \"how does X work\", \"find docs on balances\", \"Solana signing format\", \"what fields does actions/enter accept\".",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200,
+              "description": "Keywords or natural language question"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yield_fetch_doc",
+        "title": "Fetch Yield.xyz Doc Page",
+        "description": "BUILDER TOOL — fetches the full markdown content of any Yield.xyz documentation page. Use after yield_lookup_docs returns a URL. Returns authoritative spec with exact field names, types, and examples. Only accepts docs.yield.xyz URLs. Do NOT use this for live API calls or user transactions.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The .md URL from yield_lookup_docs, e.g. https://docs.yield.xyz/docs/actions.md"
+            }
+          },
+          "required": [
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yield_troubleshoot_error",
+        "description": "Diagnoses API errors, HTTP status codes, or unexpected responses from the Yield.xyz API. Use when developer says: \"I'm getting a 422\", \"400 error\", \"rate limited\", \"transaction failed\", \"FAILED status\", \"why did this fail\", or any error code or message from the API. For unrecognized errors, automatically looks up the live OpenAPI spec for the authoritative error shape.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "string",
+              "description": "Error code, HTTP status, error message, or API response"
+            },
+            "context": {
+              "description": "What endpoint was called, what arguments were passed",
+              "type": "string"
+            }
+          },
+          "required": [
+            "error"
+          ],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "yield_list_repos",
+        "title": "Yield.xyz Public Reference Repos",
+        "description": "BUILDER TOOL — public Yield.xyz GitHub repos to use as a code reference for integrations. Use this when you are stuck on an integration and the other docs tools (yield_lookup_docs, yield_fetch_doc, yield_get_api_spec, chain/transaction guides) do not give you enough to finish — then read the actual source code in these repos and base your answer on real, working code. Covers the staking/yield widget and a reference dApp, the SDK and API recipes, signing and transaction-security libraries, and an assets repo for token/provider logos. Returns each repo with a one-line description and how to fetch its raw files. Do NOT use for live data or user transactions — use the action tools for those.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      }
+    ]
+  }
+}

@@ -34,3 +34,36 @@ deployment:
   tools: 22
   checked: '2026-08-12'
   source: catalog MCP census
+tool_quality:
+  tool_count: 22
+  tokens_total: 15350
+  tokens_per_tool_median: 438
+  heavy_tools:
+  - name: yields_get
+    tokens: 2869
+  - name: actions_exit
+    tokens: 1829
+  - name: actions_enter
+    tokens: 1547
+  - name: actions_manage
+    tokens: 1296
+  heavy_tool_count: 4
+  params_total: 91
+  params_undescribed: 0
+  params_described_pct: 100.0
+  tools_with_undescribed_params: 0
+  tools_annotated: 22
+  annotated_pct: 100.0
+  state_changing_unhinted: []
+  tools_missing_schema: 0
+  short_descriptions: 0
+  duplicate_descriptions: 0
+  duplicate_names: 0
+  nonportable_names: []
+  output_schema_count: 9
+  token_estimate: chars/3.6 of each compact tool definition
+  source: mcp/yieldxyz-mcp-tools.json
+  measured: '2026-10-20'
+  scored: false
+  note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
+    from Glimind's agent-readiness audit.
