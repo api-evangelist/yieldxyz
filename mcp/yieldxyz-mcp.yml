@@ -67,3 +67,114 @@ tool_quality:
   scored: false
   note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
     from Glimind's agent-readiness audit.
+tools:
+- name: yields_get_all
+  description: Discover yield opportunities across all supported networks and protocols. Use this to find
+    yield IDs before calling yields_get, actions_enter, or any balance/validator tools. Filter by network,
+    token symbol, or type to narrow results. For RWA yields (types ["real_world_asset"]) each item also
+    includes a full kyc object (eligibility, investor tiers, jurisdictions, authorizeUrl) — read it directly
+    instead of calling yields_get per yield.
+- name: yields_get
+  description: 'Get full metadata for a single yield opportunity: fees, lock-up and cooldown periods,
+    reward mechanics, and whether entry/exit is currently open. Show this to the user before they commit
+    to entering a position.'
+- name: yields_get_validators
+  description: List validators for delegation-based yields such as Cosmos native staking or ETH native
+    staking. Use the validator address when calling actions_enter or actions_exit. Filter by preferred=true
+    to show only curated validators.
+- name: yields_get_balances
+  description: Get current balances and pending actions for a wallet address across one or more yields.
+    Always call this before actions_exit or actions_manage — the passthrough value required by those tools
+    comes from balances[].pendingActions[].passthrough.
+- name: actions_enter
+  description: Construct unsigned transactions to stake or deposit into a yield. Does NOT execute — the
+    user must sign each transaction exactly as returned (never modify unsignedTransaction). Amounts are
+    human-readable strings ("1.5" = 1.5 tokens, not wei). Submit transactions in stepIndex order; for
+    the synchronous execution pattern, wait for on-chain confirmation before submitting the next one.
+    For ERC-4626 vaults (including RWAs like Midas), inspect yields_get → mechanics.arguments.enter.fields[]
+    to discover yield-specific options (e.g. useMaxAllowance, receiverAddress).
+- name: actions_exit
+  description: Construct unsigned transactions to unstake or withdraw from a yield. Does NOT execute —
+    the user must sign each transaction exactly as returned (never modify unsignedTransaction). Amounts
+    are human-readable strings ("1.5" = 1.5 tokens, not wei). Submit transactions in stepIndex order.
+    Call yields_get_balances first to verify the staked balance. To complete a PENDING withdrawal (e.g.
+    claiming after a cooldown) that carries a passthrough value, use actions_manage — exit does NOT accept
+    passthrough. For RWA and ERC-4626 vaults, inspect yields_get → mechanics.arguments.exit.fields[] to
+    discover yield-specific options (e.g. useInstantExecution, useMaxAmount, receiverAddress).
+- name: actions_manage
+  description: Construct unsigned transactions for a pending action such as claiming rewards, restaking,
+    or unlocking funds. Does NOT execute — the user must sign. The action type and passthrough must come
+    from yields_get_balances balances[].pendingActions[] — do not guess these values.
+- name: submit_hash
+  description: Submit the on-chain transaction hash after the user has signed and broadcasted a transaction.
+    This updates the transaction status internally and enables tracking. Call this once per transaction,
+    using the transactionId and hash from the broadcast result.
+- name: get_transaction
+  description: 'Poll the status of a single transaction by its ID. Use after submit_hash to confirm on-chain
+    success. status is one of: NOT_FOUND, CREATED, BLOCKED, WAITING_FOR_SIGNATURE, SIGNED, BROADCASTED,
+    PENDING, CONFIRMED, FAILED, SKIPPED. Terminal states: CONFIRMED, FAILED, SKIPPED.'
+- name: actions_get
+  description: Get the current status and transactions of a specific action by its ID. Use this to check
+    whether an action is CREATED, PROCESSING, SUCCESS, or FAILED. Essential for async execution patterns
+    and semi-autonomous Privy flows where approval may take time.
+- name: actions_get_all
+  description: List past and pending actions for a wallet address. Filter by status, intent, type, or
+    yieldId. Use this to answer "show me my pending actions", "what did I do recently?", or to find actions
+    waiting for approval.
+- name: networks_get_all
+  description: Discover all supported networks with their IDs, names, and categories. Use this to get
+    valid network slugs before calling yields_get_all, yields_get_balances, or any other tool that requires
+    a network parameter.
+- name: yields_get_reward_rate_history
+  description: Get historical APY/reward rate snapshots for a yield over time. Use this to answer "has
+    this yield's APY been stable?" or to chart APY trends. Defaults to last 30 days, daily interval.
+- name: yields_get_tvl_history
+  description: Get historical Total Value Locked snapshots for a yield. Use this to assess protocol health
+    — a declining TVL is a warning sign. Defaults to last 30 days, daily interval.
+- name: yields_get_risk
+  description: Get detailed risk parameters for a yield. More granular than the risk field in yields_get
+    — returns individual risk items by category (e.g. smart contract, liquidity, counterparty). Use this
+    when the user asks about protocol safety or risk.
+- name: providers_get_all
+  description: Discover all supported protocols and validator providers (e.g. Lido, Aave, Morpho). Returns
+    name, id, description, website, TVL, and type. Use this to answer "what protocols does Yield.xyz support?"
+    or to get valid provider IDs for yields_get_all filters.
+- name: yields_get_kyc_status
+  description: Get the normalized KYC status of a wallet address for a yield. Use this before actions_enter
+    on yields that gate deposits behind KYC (e.g. RWAs like Securitize/Superstate). Yields without a KYC
+    requirement return "not_required". When the status is "not_started" or "pending", the response may
+    include an authorizeUrl pointing to the issuer's KYC portal.
+- name: yield_get_api_spec
+  description: 'BUILDER TOOL — fetches the live Yield.xyz OpenAPI spec (https://api.yield.xyz/docs.json).
+    Use when you need: exact request body schemas, field constraints (min/max/enum), error response shapes,
+    or operationIds for any endpoint. Accepts an optional `endpoint` filter (e.g. "/v1/actions/enter",
+    "/v1/yields/{yieldId}/validators") and an optional `query` to search across paths. Returns structured
+    field definitions, required flags, and all HTTP error codes for that endpoint. Use this instead of
+    guessing field names — the spec is the ground truth. Also use this to look up: what errors can a specific
+    endpoint return, what are the exact parameter constraints, what does a 400/403/422/429 response look
+    like.'
+- name: yield_lookup_docs
+  description: 'BUILDER TOOL — use when developing an integration, NOT for end-user actions or live data.
+    Searches the live Yield.xyz documentation index (llms.txt) in real time and returns the most relevant
+    page links with title, section, and description. Pick the one or two most relevant results and read
+    them with yield_fetch_doc. If nothing relevant is returned, use the other docs tools in this MCP (never
+    the action tools). Use for: "how does X work", "find docs on balances", "Solana signing format", "what
+    fields does actions/enter accept".'
+- name: yield_fetch_doc
+  description: BUILDER TOOL — fetches the full markdown content of any Yield.xyz documentation page. Use
+    after yield_lookup_docs returns a URL. Returns authoritative spec with exact field names, types, and
+    examples. Only accepts docs.yield.xyz URLs. Do NOT use this for live API calls or user transactions.
+- name: yield_troubleshoot_error
+  description: 'Diagnoses API errors, HTTP status codes, or unexpected responses from the Yield.xyz API.
+    Use when developer says: "I''m getting a 422", "400 error", "rate limited", "transaction failed",
+    "FAILED status", "why did this fail", or any error code or message from the API. For unrecognized
+    errors, automatically looks up the live OpenAPI spec for the authoritative error shape.'
+- name: yield_list_repos
+  description: BUILDER TOOL — public Yield.xyz GitHub repos to use as a code reference for integrations.
+    Use this when you are stuck on an integration and the other docs tools (yield_lookup_docs, yield_fetch_doc,
+    yield_get_api_spec, chain/transaction guides) do not give you enough to finish — then read the actual
+    source code in these repos and base your answer on real, working code. Covers the staking/yield widget
+    and a reference dApp, the SDK and API recipes, signing and transaction-security libraries, and an
+    assets repo for token/provider logos. Returns each repo with a one-line description and how to fetch
+    its raw files. Do NOT use for live data or user transactions — use the action tools for those.
+tools_count: 22
